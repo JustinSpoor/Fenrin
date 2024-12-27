@@ -27,7 +27,7 @@
 
 .navButtonContainer nav ul li a {
   text-decoration: none;
-  color: #0f151d;
+  color: var(--fenrin-blue-color);
   font-size: 18px;
   font-weight: bold;
   padding: 0.5rem 0.25rem;
@@ -36,7 +36,7 @@
 
 .navButtonContainer nav ul li a:hover {
   background-color: rgba(238, 238, 238, 0.5);
-  color: #0f151d;
+  color: var(--fenrin-blue-color);
   text-decoration: underline;
 }
 
@@ -46,9 +46,8 @@
 
 .loginButton {
   background-color: #ffffff;
-  color: #0f151d;
-  font-size: 16px;
-  font-weight: bold;
+  color: var(--fenrin-blue-color);
+  font-size: 1.2rem;
   padding: 8px 12px;
   margin: 0.5rem;
   cursor: pointer;

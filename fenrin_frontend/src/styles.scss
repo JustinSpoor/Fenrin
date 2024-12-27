@@ -3,3 +3,18 @@
   margin: 0;
   padding: 0;
 }
+
+.font-barlow-regular {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 400;
+}
+
+.font-montserrat-extralight {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 200;
+}
+
+:root {
+  --fenrin-blue-color: #0f151d;
+  --fenrin-red-color: #ff5555;
+}
