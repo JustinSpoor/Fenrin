@@ -22,23 +22,6 @@
   line-height: 1.5;
 }
 
-.terugButton {
-  background-color: var(--fenrin-red-color);
-  color: var(--fenrin-blue-color);
-  font-size: 1.2em;
-  padding: 0.9rem 2.9rem;
-  border: 2px solid transparent;
-  border-radius: 5px;
-  cursor: pointer;
-  box-sizing: border-box;
-  margin-top: 1.3rem;
-}
-
-.terugButton:hover {
-  border: 2px solid var(--fenrin-blue-color);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-}
-
 a {
   color: var(--fenrin-red-color);
 }
