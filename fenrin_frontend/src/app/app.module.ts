@@ -5,6 +5,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {HeaderModule} from "./header/header.module";
 import {HomeModule} from "./home/home.module";
+import {ErrorModule} from "./error/error.module";
+import {AboutModule} from "./about/about.module";
+import {PointSystemModule} from "./point-system/point-system.module";
+import {PlaytimeModule} from "./playtime/playtime.module";
+import {BuildProgressModule} from "./build-progress/build-progress.module";
+
 
 @NgModule({
   declarations: [
@@ -14,7 +20,12 @@ import {HomeModule} from "./home/home.module";
     BrowserModule,
     AppRoutingModule,
     HeaderModule,
-    HomeModule
+    HomeModule,
+    AboutModule,
+    PointSystemModule,
+    PlaytimeModule,
+    BuildProgressModule,
+    ErrorModule
   ],
   providers: [],
   bootstrap: [AppComponent]
