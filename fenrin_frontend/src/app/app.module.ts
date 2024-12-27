@@ -10,23 +10,25 @@ import {AboutModule} from "./about/about.module";
 import {PointSystemModule} from "./point-system/point-system.module";
 import {PlaytimeModule} from "./playtime/playtime.module";
 import {BuildProgressModule} from "./build-progress/build-progress.module";
+import {FooterModule} from "./footer/footer.module";
 
 
 @NgModule({
   declarations: [
     AppComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HeaderModule,
-    HomeModule,
-    AboutModule,
-    PointSystemModule,
-    PlaytimeModule,
-    BuildProgressModule,
-    ErrorModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HeaderModule,
+        HomeModule,
+        AboutModule,
+        PointSystemModule,
+        PlaytimeModule,
+        BuildProgressModule,
+        ErrorModule,
+        FooterModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })
