@@ -11,13 +11,12 @@ import {PointSystemModule} from "./point-system/point-system.module";
 import {PlaytimeModule} from "./playtime/playtime.module";
 import {BuildProgressModule} from "./build-progress/build-progress.module";
 import {FooterModule} from "./footer/footer.module";
-import {FooterComponent} from "./footer/footer/footer.component";
+import {LoginModule} from "./login/login.module";
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    FooterComponent
   ],
     imports: [
         BrowserModule,
@@ -29,6 +28,7 @@ import {FooterComponent} from "./footer/footer/footer.component";
         PlaytimeModule,
         BuildProgressModule,
         ErrorModule,
+        LoginModule,
         FooterModule
     ],
   providers: [],
