@@ -4,6 +4,7 @@ import nl.kingdom.fenrin.models.LoginForm;
 import nl.kingdom.fenrin.services.JwtService;
 import nl.kingdom.fenrin.services.MyUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Map;
 
 @RestController
 public class LoginController {
@@ -26,14 +29,13 @@ public class LoginController {
     private MyUserDetailService myUserDetailService;
 
     @PostMapping("/authenticate")
-    public String authenticateAndGenerateToken(@RequestBody LoginForm loginForm) {
+    public ResponseEntity<?> authenticateAndGenerateToken(@RequestBody LoginForm loginForm) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-
                 loginForm.getUsername(),
                 loginForm.getPassword()
         ));
         if (authentication.isAuthenticated()) {
-            return jwtService.generateToken(myUserDetailService.loadUserByUsername(loginForm.getUsername()));
+            return ResponseEntity.ok(Map.of("token", jwtService.generateToken(myUserDetailService.loadUserByUsername(loginForm.getUsername()))));
         } else {
 
             throw new UsernameNotFoundException("Invallid credentials");
