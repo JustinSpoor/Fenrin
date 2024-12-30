@@ -39,6 +39,7 @@ public class SecurityConfig {
 //  TODO hierin kan je de aangeven welke role bij welk endpoint kan!
 
             registry.requestMatchers(new AntPathRequestMatcher("/authenticate")).permitAll();
+            registry.requestMatchers(new AntPathRequestMatcher("/refreshtoken")).permitAll();
             registry.requestMatchers(new AntPathRequestMatcher("/register")).permitAll();
             registry.requestMatchers(new AntPathRequestMatcher("/admin/**")).hasRole(Roles.LEAD.toString());
             registry.requestMatchers(new AntPathRequestMatcher("/user/**")).hasAnyRole(Roles.BOUWLEIDER.toString(), Roles.LEAD.toString());

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -35,10 +36,31 @@ public class LoginController {
                 loginForm.getPassword()
         ));
         if (authentication.isAuthenticated()) {
-            return ResponseEntity.ok(Map.of("token", jwtService.generateToken(myUserDetailService.loadUserByUsername(loginForm.getUsername()))));
-        } else {
+            String accessToken = jwtService.generateToken(myUserDetailService.loadUserByUsername(loginForm.getUsername()));
+            String refreshToken = jwtService.generateRefreshToken(myUserDetailService.loadUserByUsername(loginForm.getUsername()));
 
-            throw new UsernameNotFoundException("Invallid credentials");
+            Map<String, String> tokens = new HashMap<>();
+            tokens.put("token", accessToken);
+            tokens.put("refreshToken", refreshToken);
+
+            return ResponseEntity.ok(tokens);
+        } else {
+            return ResponseEntity.status(401).body("Invallid Credentials");
         }
+    }
+
+    @PostMapping("/refreshtoken")
+    public ResponseEntity<?> refreshToken(@RequestBody Map<String, String> request) {
+        String refreshToken = request.get("refreshToken");
+        if (jwtService.isTokenValid(refreshToken)) {
+            String username = jwtService.extractUsername(refreshToken);
+            String newToken = jwtService.generateToken(myUserDetailService.loadUserByUsername(username));
+
+            Map<String, String> tokens = new HashMap<>();
+            tokens.put("token", newToken);
+
+            return ResponseEntity.ok(tokens);
+        }
+        return ResponseEntity.status(403).body("Invalid refresh token");
     }
 }

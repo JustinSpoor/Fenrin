@@ -3,6 +3,7 @@ package nl.kingdom.fenrin.services;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -16,13 +17,30 @@ import java.util.concurrent.TimeUnit;
 public class JwtService {
 
 //    TODO PUT THIS SECRET KEY INTO ENV VARIABLE ON GITHUB
-    private static final long VALIDITY_TIME = TimeUnit.HOURS.toMillis(2);
+    private static final long TOKEN_VALIDITY_TIME = TimeUnit.MINUTES.toMillis(60);
+    private static final long REFRESH_TOKEN_VALIDITY_TIME = TimeUnit.HOURS.toMillis(24);
+
+    @Autowired
+    private MyUserDetailService myUserDetailService;
+
 
     public String generateToken(UserDetails userDetails) {
+        System.out.println(userDetails.getAuthorities());
+
+        return Jwts.builder()
+                .subject(userDetails.getUsername())
+                .claim("roles", userDetails.getAuthorities())
+                .issuedAt(Date.from(Instant.now()))
+                .expiration(Date.from(Instant.now().plusMillis(TOKEN_VALIDITY_TIME)))
+                .signWith(generateKey())
+                .compact();
+    }
+
+    public String generateRefreshToken(UserDetails userDetails) {
         return Jwts.builder()
                 .subject(userDetails.getUsername())
                 .issuedAt(Date.from(Instant.now()))
-                .expiration(Date.from(Instant.now().plusMillis(VALIDITY_TIME)))
+                .expiration(Date.from(Instant.now().plusMillis(REFRESH_TOKEN_VALIDITY_TIME)))
                 .signWith(generateKey())
                 .compact();
     }
