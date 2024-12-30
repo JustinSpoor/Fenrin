@@ -5,7 +5,7 @@ import {LoginPageComponent} from "./login-page/login-page.component";
 export const loginRoutes: Routes = [
   {
     path: 'login',
-    component: LoginPageComponent
+    component: LoginPageComponent,
   }
 ]
 
