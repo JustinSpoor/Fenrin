@@ -12,6 +12,8 @@ import {PlaytimeModule} from "./playtime/playtime.module";
 import {BuildProgressModule} from "./build-progress/build-progress.module";
 import {FooterModule} from "./footer/footer.module";
 import {LoginModule} from "./login/login.module";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import {AuthInterceptor} from "./auth/auth.interceptor";
 
 
 @NgModule({
@@ -20,6 +22,7 @@ import {LoginModule} from "./login/login.module";
   ],
     imports: [
         BrowserModule,
+        HttpClientModule,
         AppRoutingModule,
         HeaderModule,
         HomeModule,
@@ -31,7 +34,11 @@ import {LoginModule} from "./login/login.module";
         LoginModule,
         FooterModule
     ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
