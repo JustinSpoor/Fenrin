@@ -25,8 +25,6 @@ public class JwtService {
 
 
     public String generateToken(UserDetails userDetails) {
-        System.out.println(userDetails.getAuthorities());
-
         return Jwts.builder()
                 .subject(userDetails.getUsername())
                 .claim("roles", userDetails.getAuthorities())
