@@ -1,11 +1,13 @@
 import {NgModule} from "@angular/core";
 import {RouterModule, Routes} from "@angular/router";
 import {PlaytimePageComponent} from "./playtime-page/playtime-page.component";
+import {AuthGuard} from "../auth/guards/auth.guard";
 
 export const playtimeRoutes: Routes = [
   {
     path: 'playtime',
-    component: PlaytimePageComponent
+    component: PlaytimePageComponent,
+    canActivate: [AuthGuard]
   }
 ]
 

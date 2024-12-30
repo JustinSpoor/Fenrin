@@ -2,20 +2,22 @@
     <div class="navButtonContainer font-barlow-regular">
       <nav>
         <ul>
-          <!-- (niet ingelogd) nav naar home (logo) en about -->
-          <li><a routerLink="home" routerLinkActive="active" >Fenrin</a></li>
+          <li><a routerLink="home" routerLinkActive="active"  >Fenrin</a></li>
           <li><a routerLink="about" routerLinkActive="active" >About</a></li>
-          <!-- (ingelogd) + nav naar puntensysteem,playtime inzien en bouw progress -->
-          <li><a routerLink="punten" routerLinkActive="active" >Punten</a></li>
-          <li><a routerLink="playtime" routerLinkActive="active" >Playtime</a></li>
-          <li><a routerLink="bouw" routerLinkActive="active" >Bouw</a></li>
+          <li *ngIf="authService.hasRoles('ROLE_SPELER')"><a routerLink="punten" routerLinkActive="active" >Punten</a></li>
+          <li *ngIf="authService.hasRoles('ROLE_SPELER')"><a routerLink="playtime" routerLinkActive="active" >Playtime</a></li>
+          <li *ngIf="authService.hasRoles('ROLE_SPELER')"><a routerLink="bouw" routerLinkActive="active" >Bouw</a></li>
         </ul>
       </nav>
     </div>
 
-    <button class="loginButton font-barlow-regular" routerLink="login">
+    <button *ngIf="isLoggedIn == false" class="loginButton font-barlow-regular" routerLink="login">
       <span>Inloggen</span>
       <i class="fas fa-user"></i>
     </button>
 
+    <button *ngIf="isLoggedIn == true" class="loginButton font-barlow-regular" (click)="logout()">
+    <span>Uitloggen</span>
+    <i class="fas fa-user"></i>
+    </button>
 </header>
