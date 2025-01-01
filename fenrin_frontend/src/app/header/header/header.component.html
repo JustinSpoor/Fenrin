@@ -4,9 +4,9 @@
         <ul>
           <li><a routerLink="home" routerLinkActive="active"  >Fenrin</a></li>
           <li><a routerLink="about" routerLinkActive="active" >About</a></li>
-          <li *ngIf="authService.hasRoles('ROLE_SPELER')"><a routerLink="punten" routerLinkActive="active" >Punten</a></li>
-          <li *ngIf="authService.hasRoles('ROLE_SPELER')"><a routerLink="playtime" routerLinkActive="active" >Playtime</a></li>
           <li *ngIf="authService.hasRoles('ROLE_SPELER')"><a routerLink="bouw" routerLinkActive="active" >Bouw</a></li>
+          <li *ngIf="authService.hasRoles('ROLE_SPELER')"><a routerLink="playtime" routerLinkActive="active" >Playtime</a></li>
+          <li *ngIf="authService.hasRoles('ROLE_SPELER')"><a routerLink="punten" routerLinkActive="active" >Punten</a></li>
         </ul>
       </nav>
     </div>

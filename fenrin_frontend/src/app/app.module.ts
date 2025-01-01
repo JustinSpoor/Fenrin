@@ -14,6 +14,7 @@ import {FooterModule} from "./footer/footer.module";
 import {LoginModule} from "./login/login.module";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {AuthInterceptor} from "./auth/auth.interceptor";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import {AuthInterceptor} from "./auth/auth.interceptor";
         BuildProgressModule,
         ErrorModule,
         LoginModule,
-        FooterModule
+        FooterModule,
+        BrowserAnimationsModule
     ],
   providers: [
     {
