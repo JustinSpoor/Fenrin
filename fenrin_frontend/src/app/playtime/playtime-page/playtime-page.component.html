@@ -1,1 +1,32 @@
-<p>playtime-page works!</p>
+<div class="search-container ">
+  <input
+    type="text"
+    placeholder="Zoek op naam..."
+    [(ngModel)]="searchTerm"
+    class="search-input font-barlow-regular"
+  />
+</div>
+<div class="table-container font-barlow-regular">
+  <h2>Playtime</h2>
+  <div class="table-wrapper">
+    <table class="styled-table">
+      <thead>
+      <tr>
+        <th>Naam</th>
+        <th>Playtime Deze Week</th>
+        <th>Totale Playtime</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let player of filteredPlayerPlaytime()">
+        <td>{{ player.name }}</td>
+        <td>{{ player.playtimeThisWeek }}</td>
+        <td>{{ player.totalPlaytime }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div *ngIf="authService.hasRoles('ROLE_LEAD')" class="editButtonContainer">
+  <button class="editButton font-barlow-regular" routerLink="./edit">Playtime aanpassen</button>
+</div>
