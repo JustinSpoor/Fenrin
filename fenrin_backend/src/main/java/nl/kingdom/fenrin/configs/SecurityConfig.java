@@ -1,7 +1,6 @@
 package nl.kingdom.fenrin.configs;
 
 
-import lombok.AllArgsConstructor;
 import nl.kingdom.fenrin.enums.Roles;
 import nl.kingdom.fenrin.services.MyUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
 
 @Configuration
 @EnableWebSecurity
@@ -39,15 +39,17 @@ public class SecurityConfig {
 //  TODO hierin kan je de aangeven welke role bij welk endpoint kan!
 
             //Auth routes
-            registry.requestMatchers(new AntPathRequestMatcher("/authenticate")).permitAll();
-            registry.requestMatchers(new AntPathRequestMatcher("/refreshtoken")).permitAll();
-            registry.requestMatchers(new AntPathRequestMatcher("/register")).permitAll();
+            registry.requestMatchers("/authenticate", "/refreshtoken", "/register").permitAll();
 
             // Playtime routes
-            registry.requestMatchers(new AntPathRequestMatcher("/playtimelist")).hasAnyRole(Roles.SPELER.toString());
+            registry.requestMatchers("/playtimelist").hasAnyAuthority(Roles.ROLE_SPELER.toString());
 
-            registry.anyRequest().authenticated();
-        })
+                    try {
+                        registry.anyRequest().authenticated().and().cors();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                })
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
