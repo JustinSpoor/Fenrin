@@ -49,13 +49,12 @@ export class AuthService {
     if (!decoded.exp) return true;
 
     const experationDate = decoded.exp * 1000;
-    const now = new Date().getDate();
+    const now = new Date().getTime();
 
     return experationDate < now;
   }
 
-  isRefreshTokenExpired() {
-    const token = localStorage.getItem(this.JWT_REFRESH_TOKEN);
+  isRefreshTokenExpired(token: any) {
     if(!token) return true;
 
     const decoded = jwtDecode(token);
@@ -63,7 +62,9 @@ export class AuthService {
     if (!decoded.exp) return true;
 
     const experationDate = decoded.exp * 1000;
-    const now = new Date().getDate();
+    console.log(experationDate)
+    const now = new Date().getTime();
+    console.log(now)
 
     return experationDate < now;
   }
@@ -72,13 +73,18 @@ export class AuthService {
     let refreshToken: any = localStorage.getItem(this.JWT_REFRESH_TOKEN)
     if(!refreshToken) return;
 
+    if(this.isRefreshTokenExpired(refreshToken)) {
+      this.logout()
+      return;
+    }
+
     let refreshTokenMap = {
       "refreshToken": refreshToken
     }
 
     return this.http
       .post<any>('http://localhost:8080/refreshtoken', refreshTokenMap)
-      .pipe(tap((response: any) => this.storeJwtToken(response.token)));
+      .pipe(tap((response: any) => this.storeJwtToken(response.token))).subscribe();
   }
 
   private storeJwtToken(jwt: string) {

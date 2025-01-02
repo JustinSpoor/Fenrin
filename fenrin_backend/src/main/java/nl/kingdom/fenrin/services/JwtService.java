@@ -37,6 +37,7 @@ public class JwtService {
     public String generateRefreshToken(UserDetails userDetails) {
         return Jwts.builder()
                 .subject(userDetails.getUsername())
+                .claim("roles", userDetails.getAuthorities())
                 .issuedAt(Date.from(Instant.now()))
                 .expiration(Date.from(Instant.now().plusMillis(REFRESH_TOKEN_VALIDITY_TIME)))
                 .signWith(generateKey())

@@ -11,16 +11,23 @@ import {AuthService} from "./auth.service";
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
+  private refreshTokenEndpoint = '/refreshtoken'
+
   constructor(private authService: AuthService) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     const jwtToken = this.getJwtToken();
 
     if (this.authService.isTokenExpired()) {
-      if(this.authService.isRefreshTokenExpired()) {
-        this.authService.logout();
-      }
       this.authService.refreshToken();
+    }
+
+    console.log(request.url)
+    if(request.url.includes(this.refreshTokenEndpoint)) {
+      const modifiedRequest = request.clone({
+        headers: request.headers.delete('Authorization'),
+      });
+      return next.handle(modifiedRequest)
     }
 
     if(jwtToken) {
