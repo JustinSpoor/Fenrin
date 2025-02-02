@@ -20,7 +20,7 @@ export class PlaytimePageComponent {
   ];
 
   ngOnInit() {
-    this.playtimeService.fetchPlayerPlaytimeList()
+    this.playtimeService.fetchPlayerPlaytimeListDESC()
       .subscribe((data) => {
         this.playerPlaytime = this.parsePlayerPlaytime(data);
       });
@@ -30,8 +30,16 @@ export class PlaytimePageComponent {
     return data.map((player: any) => {
       const [currentWeek, lastWeek] = player.playtimes;
 
-      const playtimeThisWeek = currentWeek && lastWeek ? currentWeek.timePlayed - lastWeek.timePlayed: 0;
-      const playtimeThisWeekFormatted = `${playtimeThisWeek} uur`
+      let playtimeThisWeek = currentWeek && lastWeek ? currentWeek.timePlayed - lastWeek.timePlayed : 0;
+      let playtimeThisWeekFormatted;
+
+      if (playtimeThisWeek <= 60) {
+        playtimeThisWeekFormatted = `${playtimeThisWeek} minuten`
+
+      } else {
+        playtimeThisWeek = parseFloat((playtimeThisWeek / 60).toFixed(2));
+        playtimeThisWeekFormatted = `${playtimeThisWeek} uur`
+      }
 
       const totalPlaytime = currentWeek ? currentWeek.timePlayed: 0;
       const days = Math.floor(totalPlaytime / 1440);
