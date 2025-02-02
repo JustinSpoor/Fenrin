@@ -1,0 +1,56 @@
+<div class="search-container ">
+  <input
+    type="text"
+    placeholder="Zoek op naam..."
+    [(ngModel)]="searchTerm"
+    class="search-input font-barlow-regular"
+  />
+</div>
+<div *ngIf="searchTerm.trim()">
+  <div class="table-container font-barlow-regular" *ngFor="let player of filteredPlayerPlaytime()">
+    <h2 >{{ player.playerName }}</h2>
+    <div class="table-wrapper">
+      <table class="styled-table">
+        <thead>
+        <tr>
+          <th>Jaar</th>
+          <th>Weeknummer</th>
+          <th>Dagen</th>
+          <th>Uren</th>
+          <th>minuten</th>
+          <th>Wekelijkse uren</th>
+          <th>afgemeld</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let playtime of player.playtimes; let i = index;">
+          <td>{{ playtime.year }}</td>
+          <td>{{ playtime.weekNumber }}</td>
+          <td>{{ formatDays(playtime.timePlayed) }}</td>
+          <td>{{ formatHours(playtime.timePlayed) }}</td>
+          <td>{{ playtime.timePlayed % 60}}</td>
+          <td>{{ i > 0 ? player.playtimes[i].timePlayed - player.playtimes[i - 1].timePlayed : 0 }} </td>
+          <td *ngIf="playtime.absent">Ja</td>
+          <td *ngIf="!playtime.absent">nee</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <button (click)="addNewPlaytime()">Voeg nieuwe playtime toe!</button>
+
+    <div *ngIf="showNewPlaytimeModal">
+      <!-- TODO add modal to add in a new playtime for the selected player -->
+      <div>{{player.playerName}}</div>
+    </div>
+
+  </div>
+</div>
+
+
+
+<div *ngIf="!searchTerm.trim() || filteredPlayerPlaytime().length == 0"  >
+  <div class="table-container font-barlow-regular" >
+    <h2>Er zit niemand met deze ign in Fenrin...</h2>
+  </div>
+</div>
+

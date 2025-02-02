@@ -10,7 +10,11 @@ export class PlaytimeService {
   }
 
 
-  fetchPlayerPlaytimeList() {
-    return this.http.get<any>('http://localhost:8080/playtimelist');
+  fetchPlayerPlaytimeListDESC() {
+    return this.http.get<any>('http://localhost:8080/descplaytimelist');
+  }
+
+  fetchPlayerPlaytimeListASC() {
+    return this.http.get<any>('http://localhost:8080/ascplaytimelist');
   }
 }
