@@ -1,3 +1,7 @@
+<button class="back-btn" routerLink="../">
+  <i class="fas fa-arrow-left"></i>
+</button>
+
 <div class="search-container ">
   <input
     type="text"
@@ -7,7 +11,7 @@
   />
 </div>
 <div *ngIf="searchTerm.trim()">
-  <div class="table-container font-barlow-regular" *ngFor="let player of filteredPlayerPlaytime()">
+  <div class="table-container font-barlow-regular" *ngFor="let player of filteredPlayerPlaytime(); let idx = index;">
     <h2 >{{ player.playerName }}</h2>
     <div class="table-wrapper">
       <table class="styled-table">
@@ -29,20 +33,68 @@
           <td>{{ formatDays(playtime.timePlayed) }}</td>
           <td>{{ formatHours(playtime.timePlayed) }}</td>
           <td>{{ playtime.timePlayed % 60}}</td>
-          <td>{{ i > 0 ? player.playtimes[i].timePlayed - player.playtimes[i - 1].timePlayed : 0 }} </td>
+          <td>{{ i > 0 ? ((player.playtimes[i].timePlayed - player.playtimes[i - 1].timePlayed) / 60).toFixed(2) : 0 }} </td>
           <td *ngIf="playtime.absent">Ja</td>
           <td *ngIf="!playtime.absent">nee</td>
         </tr>
         </tbody>
       </table>
     </div>
-    <button (click)="addNewPlaytime()">Voeg nieuwe playtime toe!</button>
-
-    <div *ngIf="showNewPlaytimeModal">
-      <!-- TODO add modal to add in a new playtime for the selected player -->
-      <div>{{player.playerName}}</div>
+    <div class="addButtonContainer">
+      <button class="addButton font-barlow-regular" (click)="addNewPlaytime()">Toevoegen</button>
     </div>
 
+    <app-modal [isVisible]="showNewPlaytimeModal" (onClose)="closeModal()">
+      <h2 class="form-player-name">Playtime van: {{player.playerName}}</h2>
+      <form [formGroup]="form" (ngSubmit)="onSubmit(player.playerName)">
+        <div class="form-group">
+          <label for="year">Jaar</label>
+          <input type="number" id="year" formControlName="year" placeholder="Jaar">
+          <div *ngIf="form.get('year')?.invalid && form.get('year')?.touched" class="error">
+            * Jaar moet worden ingevuld.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="week">Week</label>
+          <input type="number" id="week" formControlName="week" placeholder="Weeknummer">
+          <div *ngIf="form.get('week')?.invalid && form.get('week')?.touched" class="error">
+            * Week moet worden ingevuld.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="days">Dagen</label>
+          <input type="number" id="days" formControlName="days" placeholder="Dagen">
+          <div *ngIf="form.get('days')?.invalid && form.get('days')?.touched" class="error">
+            * Dagen moet worden ingevuld.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="hours">Uren</label>
+          <input type="number" id="hours" formControlName="hours" placeholder="Uren">
+          <div *ngIf="form.get('hours')?.invalid && form.get('hours')?.touched" class="error">
+            * Uren moet worden ingevuld.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="minutes">Minuten</label>
+          <input type="number" id="minutes" formControlName="minutes" placeholder="Minuten">
+          <div *ngIf="form.get('minutes')?.invalid && form.get('minutes')?.touched" class="error">
+            * Minuten moet worden ingevuld
+          </div>
+        </div>
+
+        <div class="form-group absence">
+          <label for="absence">Afgemeld</label>
+          <input type="checkbox" id="absence" formControlName="absence">
+        </div>
+
+        <button class="form-button" type="submit" [disabled]="form.invalid">Opslaan</button>
+      </form>
+    </app-modal>
   </div>
 </div>
 
@@ -50,7 +102,7 @@
 
 <div *ngIf="!searchTerm.trim() || filteredPlayerPlaytime().length == 0"  >
   <div class="table-container font-barlow-regular" >
-    <h2>Er zit niemand met deze ign in Fenrin...</h2>
+    <h2>Er zit niemand met deze IGN in Fenrin...</h2>
   </div>
 </div>
 

@@ -15,6 +15,7 @@ import {LoginModule} from "./login/login.module";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {AuthInterceptor} from "./auth/auth.interceptor";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {ReactiveFormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -33,8 +34,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         BuildProgressModule,
         ErrorModule,
         LoginModule,
+        ReactiveFormsModule,
         FooterModule,
-        BrowserAnimationsModule
     ],
   providers: [
     {

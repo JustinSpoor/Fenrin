@@ -17,4 +17,8 @@ export class PlaytimeService {
   fetchPlayerPlaytimeListASC() {
     return this.http.get<any>('http://localhost:8080/ascplaytimelist');
   }
+
+  postPlayerPlaytime(playtime: any) {
+    return this.http.post<any>('http://localhost:8080/playtime', playtime);
+  }
 }

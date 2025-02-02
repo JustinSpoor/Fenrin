@@ -9,13 +9,11 @@
 
 .search-container {
   text-align: center;
-  margin-bottom: 20px;
 }
 
 .search-input {
   width: 80%;
   max-width: 400px;
-  margin-top: 5rem;
   padding: 10px;
   font-size: 1.2em;
   border: 1px solid #ddd;
@@ -85,4 +83,86 @@ tr:nth-child(even) td {
 
 table, th, td {
   border: 1px solid var(--fenrin-blue-color);
+}
+
+.back-btn {
+  margin: 5rem 0 1rem 2rem;
+  font-size: 1.2rem;
+  color: var(--fenrin-blue-color);
+  background-color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.addButton {
+  background-color: var(--fenrin-red-color);
+  color: var(--fenrin-blue-color);
+  font-size: 1em;
+  padding: 0.6rem 2.5rem;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  cursor: pointer;
+  box-sizing: border-box;
+  margin-top: 1.3rem;
+}
+
+.addButton:hover {
+  border: 2px solid var(--fenrin-blue-color);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.addButtonContainer {
+  text-align: center;
+}
+
+
+
+
+.form-player-name {
+  color: var(--fenrin-blue-color);
+}
+
+.form-group {
+  margin: 1rem;
+
+}
+
+.absence {
+  width: 15%;
+}
+
+.absence input {
+  margin-top: 1rem;
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button[type="submit"] {
+  width: 100%;
+  padding: 10px;
+  background-color: var(--fenrin-red-color);
+  color: var(--fenrin-blue-color);
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+button[type="submit"]:not(:disabled):hover {
+  border: 2px solid var(--fenrin-blue-color);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+button[type="submit"]:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.error {
+  color: var(--fenrin-red-color);
+  font-size: 12px;
 }
