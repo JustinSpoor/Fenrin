@@ -17,7 +17,19 @@ public interface PlaytimeRepository extends JpaRepository<Playtime, UUID> {
         WHERE (pt.year > :startYear OR (pt.year = :startYear AND pt.weekNumber >= :startWeek))
         ORDER BY p.name, pt.year DESC, pt.weekNumber DESC
             """)
-     List<Playtime> findPlaytimesForLastFiveWeeks(
+     List<Playtime> findPlaytimesForLastFiveWeeksDESC(
+            @Param("startYear") int startYear,
+            @Param("startWeek") int startWeek
+    );
+
+    @Query(value = """
+        SELECT pt 
+        FROM Playtime pt 
+        JOIN pt.player p 
+        WHERE (pt.year > :startYear OR (pt.year = :startYear AND pt.weekNumber >= :startWeek))
+        ORDER BY p.name, pt.year ASC, pt.weekNumber ASC
+            """)
+    List<Playtime> findPlaytimesForLastFiveWeeksASC(
             @Param("startYear") int startYear,
             @Param("startWeek") int startWeek
     );

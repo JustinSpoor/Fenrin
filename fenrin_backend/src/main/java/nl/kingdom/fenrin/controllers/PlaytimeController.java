@@ -15,8 +15,13 @@ public class PlaytimeController {
     @Autowired
     private PlaytimeService playtimeService;
 
-    @GetMapping("/playtimelist")
-    public ResponseEntity<List<PlayerPlaytimesDTO>> getPlaytimeList() {
-        return ResponseEntity.ok(playtimeService.getAllPlayerPlaytimesForLastFiveWeeks());
+    @GetMapping("/descplaytimelist")
+    public ResponseEntity<List<PlayerPlaytimesDTO>> getPlaytimeListDESC() {
+        return ResponseEntity.ok(playtimeService.getAllPlayerPlaytimesForLastFiveWeeksDESC());
+    }
+
+    @GetMapping("/ascplaytimelist")
+    public ResponseEntity<List<PlayerPlaytimesDTO>> getPlaytimeListASC() {
+        return ResponseEntity.ok(playtimeService.getAllPlayerPlaytimesForLastFiveWeeksASC());
     }
 }

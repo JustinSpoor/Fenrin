@@ -20,7 +20,7 @@ public class PlaytimeService {
     @Autowired
     private PlaytimeRepository playtimeRepository;
 
-    public List<PlayerPlaytimesDTO> getAllPlayerPlaytimesForLastFiveWeeks() {
+    public List<PlayerPlaytimesDTO> getAllPlayerPlaytimesForLastFiveWeeksDESC() {
         LocalDate fiveWeeksAgo = LocalDate.now().minusWeeks(5);
 
         WeekFields weekFields = WeekFields.of(Locale.getDefault());
@@ -28,7 +28,34 @@ public class PlaytimeService {
         int startWeek = fiveWeeksAgo.get(weekFields.weekOfWeekBasedYear());
 
 
-        List<Playtime> playtimes = playtimeRepository.findPlaytimesForLastFiveWeeks(startYear, startWeek);
+        List<Playtime> playtimes = playtimeRepository.findPlaytimesForLastFiveWeeksDESC(startYear, startWeek);
+
+        Map<String, List<PlaytimeDTO>> groupedPlaytimes = playtimes.stream()
+                .collect(Collectors.groupingBy(
+                        pt -> pt.getPlayer().getName(),
+                        Collectors.mapping(pt -> new PlaytimeDTO(
+                                pt.getId().toString(),
+                                pt.getYear(),
+                                pt.getWeekNumber(),
+                                pt.getTimePlayed(),
+                                pt.isAbsent()
+                        ), Collectors.toList())
+                ));
+
+        return groupedPlaytimes.entrySet().stream()
+                .map(entry -> new PlayerPlaytimesDTO(entry.getKey(), entry.getValue()))
+                .collect(Collectors.toList());
+    }
+
+    public List<PlayerPlaytimesDTO> getAllPlayerPlaytimesForLastFiveWeeksASC() {
+        LocalDate fiveWeeksAgo = LocalDate.now().minusWeeks(5);
+
+        WeekFields weekFields = WeekFields.of(Locale.getDefault());
+        int startYear = fiveWeeksAgo.getYear();
+        int startWeek = fiveWeeksAgo.get(weekFields.weekOfWeekBasedYear());
+
+
+        List<Playtime> playtimes = playtimeRepository.findPlaytimesForLastFiveWeeksASC(startYear, startWeek);
 
         Map<String, List<PlaytimeDTO>> groupedPlaytimes = playtimes.stream()
                 .collect(Collectors.groupingBy(
