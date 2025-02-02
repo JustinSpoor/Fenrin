@@ -43,6 +43,7 @@ public class SecurityConfig {
 
             // Playtime routes
             registry.requestMatchers("/playtimelist").hasAnyAuthority(Roles.ROLE_SPELER.toString());
+            registry.requestMatchers("/playtime").hasAnyAuthority(Roles.ROLE_LEAD.toString());
 
                     try {
                         registry.anyRequest().authenticated().and().cors();

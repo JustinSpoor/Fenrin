@@ -22,7 +22,7 @@ public class Playtime {
 
     private int timePlayed;
 
-    private boolean absent;;
+    private boolean absent;
 
     @ManyToOne
     @JoinColumn(name = "player_id", nullable = false)
