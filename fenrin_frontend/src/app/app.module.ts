@@ -16,6 +16,7 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {AuthInterceptor} from "./auth/auth.interceptor";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {ReactiveFormsModule} from "@angular/forms";
+import {PlayerListModule} from "./player-list/player-list.module";
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import {ReactiveFormsModule} from "@angular/forms";
         PointSystemModule,
         PlaytimeModule,
         BuildProgressModule,
+        PlayerListModule,
         ErrorModule,
         LoginModule,
         ReactiveFormsModule,

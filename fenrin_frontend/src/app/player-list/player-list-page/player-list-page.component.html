@@ -1,1 +1,44 @@
-<p>player-list-page works!</p>
+<div class="container font-barlow-regular">
+  <h2>Spelerslijst</h2>
+  <input type="text" [formControl]="searchControl" placeholder="Zoek speler..." class="search-bar">
+
+  <ul class="player-list">
+    <li *ngFor="let player of filteredPlayers" class="player-item">
+      <span *ngIf="editingPlayer?.id !== player.id">{{ player.name }} ({{ player.rank }})</span>
+
+      <div *ngIf="editingPlayer?.id === player.id">
+        <input [(ngModel)]="editingPlayer.name" placeholder="Naam" class="input-field">
+        <select [(ngModel)]="editingPlayer.rank" class="select-field">
+          <option value="non-actief">Non-actief</option>
+          <option value="afgekeurd">Afgekeurd</option>
+          <option value="sfeerproever">Sfeerproever</option>
+          <option value="whitelisted">Whitelisted</option>
+          <option value="lead">Lead</option>
+          <option value="free-slot">Free-slot</option>
+        </select>
+      </div>
+
+      <div class="buttons">
+        <button *ngIf="editingPlayer?.id !== player.id" (click)="editPlayer(player)" class="btn btn-edit">Bewerken</button>
+        <button *ngIf="editingPlayer?.id !== player.id" (click)="removePlayer(player.id)" class="btn btn-danger">Verwijderen</button>
+
+        <button *ngIf="editingPlayer?.id === player.id" (click)="updatePlayer()" class="btn btn-success" [disabled]="isUpdateButtonDisabled()">Opslaan</button>
+        <button *ngIf="editingPlayer?.id === player.id" (click)="cancelEdit()" class="btn btn-cancel">Annuleren</button>
+      </div>
+    </li>
+  </ul>
+
+  <div class="add-player">
+    <input [(ngModel)]="newPlayerName" type="text" placeholder="Naam" class="input-field">
+    <select [(ngModel)]="newPlayerRank" class="select-field">
+      <option value="sfeerproever">Sfeerproever</option>
+      <option value="whitelisted">Whitelisted</option>
+      <option value="non-actief">Non-actief</option>
+      <option value="afgekeurd">Afgekeurd</option>
+      <option value="lead">Lead</option>
+      <option value="free-slot">Free-slot</option>
+    </select>
+    <button (click)="addPlayer(newPlayerName, newPlayerRank)" class="btn btn-add" [disabled]="isAddButtonDisabled()">Toevoegen</button>
+    <div class="whitelist-slots">{{ getWhitelistedPlayerCount()}} / {{whitelistSlots}}</div>
+  </div>
+</div>
