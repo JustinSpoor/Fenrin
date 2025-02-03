@@ -7,6 +7,7 @@ import {pointSystemRoutes} from "./point-system/point-system-routing.module";
 import {playtimeRoutes} from "./playtime/playtime-routing.module";
 import {buildProgressRoutes} from "./build-progress/build-progress-routing.module";
 import {loginRoutes} from "./login/login-routing.module";
+import {playerListRoutes} from "./player-list/player-list-routing.module";
 
 
 const routes: Routes = [
@@ -23,6 +24,7 @@ const routes: Routes = [
       ...pointSystemRoutes,
       ...playtimeRoutes,
       ...buildProgressRoutes,
+      ...playerListRoutes,
       ...loginRoutes,
       {
         path: '**',
