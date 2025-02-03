@@ -3,7 +3,6 @@ package nl.kingdom.fenrin.controllers;
 import nl.kingdom.fenrin.dto.PlayerPlaytimesDTO;
 import nl.kingdom.fenrin.dto.PostPlayerPlaytimeDTO;
 import nl.kingdom.fenrin.models.Player;
-import nl.kingdom.fenrin.models.Playtime;
 import nl.kingdom.fenrin.services.PlayerService;
 import nl.kingdom.fenrin.services.PlaytimeService;
 import org.springframework.beans.factory.annotation.Autowired;

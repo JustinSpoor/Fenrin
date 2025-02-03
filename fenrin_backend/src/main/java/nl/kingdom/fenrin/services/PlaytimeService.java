@@ -99,5 +99,19 @@ public class PlaytimeService {
 
         return this.playtimeRepository.save(newPlaytime);
     }
+
+    public void setDefaultPlaytime(Player player) {
+        Playtime defaultPlaytime = new Playtime();
+
+        WeekFields weekFields = WeekFields.of(Locale.getDefault());
+
+        defaultPlaytime.setYear(LocalDate.now().getYear());
+        defaultPlaytime.setWeekNumber(LocalDate.now().minusWeeks(1).get(weekFields.weekOfWeekBasedYear()));
+        defaultPlaytime.setTimePlayed(0);
+        defaultPlaytime.setAbsent(false);
+        defaultPlaytime.setPlayer(player);
+
+        this.playtimeRepository.save(defaultPlaytime);
+    }
 }
 

@@ -19,6 +19,8 @@ public class Player {
 
     private String name;
 
+    private String rank;
+
     @OneToMany(mappedBy = "player", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Playtime> playtimes;
