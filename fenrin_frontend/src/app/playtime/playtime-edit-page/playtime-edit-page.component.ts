@@ -28,6 +28,10 @@ export class PlaytimeEditPageComponent {
 
 
   ngOnInit() {
+    this.loadPlaytimes();
+  }
+
+  loadPlaytimes() {
     this.playtimeService.fetchPlayerPlaytimeListASC()
       .subscribe((data) => {
         this.playerList = data;
@@ -92,6 +96,7 @@ export class PlaytimeEditPageComponent {
       this.playtimeService.postPlayerPlaytime(playtime)
         .subscribe((response) => {
           //todo add confirmation/error shizzle here
+          this.loadPlaytimes();
           this.closeModal();
         });
     }
