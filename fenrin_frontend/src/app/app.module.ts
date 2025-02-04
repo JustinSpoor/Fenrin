@@ -14,9 +14,9 @@ import {FooterModule} from "./footer/footer.module";
 import {LoginModule} from "./login/login.module";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {AuthInterceptor} from "./auth/auth.interceptor";
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {ReactiveFormsModule} from "@angular/forms";
 import {PlayerListModule} from "./player-list/player-list.module";
+import {ApplicationModule} from "./application/application.module";
 
 
 @NgModule({
@@ -33,6 +33,7 @@ import {PlayerListModule} from "./player-list/player-list.module";
         PointSystemModule,
         PlaytimeModule,
         BuildProgressModule,
+        ApplicationModule,
         PlayerListModule,
         ErrorModule,
         LoginModule,
