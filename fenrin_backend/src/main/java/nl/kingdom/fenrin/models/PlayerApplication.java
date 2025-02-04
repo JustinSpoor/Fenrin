@@ -23,7 +23,7 @@ public class PlayerApplication {
     private String minecraftName;
 
     private int age;
-    
+
     @Column(columnDefinition = "TEXT")
     private String aboutMe;
 
