@@ -5,6 +5,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import { ApplicationViewPageComponent } from './application-view-page/application-view-page.component';
 import {ApplicationRoutingModule} from "./application-routing.module";
+import {SharedModule} from "../shared/shared.module";
 
 
 
@@ -19,6 +20,7 @@ import {ApplicationRoutingModule} from "./application-routing.module";
     ApplicationRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
+    SharedModule,
   ]
 })
 export class ApplicationModule { }
