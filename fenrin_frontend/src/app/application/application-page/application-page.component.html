@@ -1,1 +1,39 @@
-<p>application-page works!</p>
+<div class="container font-barlow-regular">
+  <h2>Sollicitatie The kingdom Fenrin.</h2>
+  <form [formGroup]="applicationForm" (ngSubmit)="onSubmit()">
+    <div class="form-container">
+      <label>Wat is jou naam?</label>
+      <input class="font-barlow-regular" type="text" formControlName="name" required />
+
+      <label>Discord Naam. (met #xxxx)</label>
+      <input class="font-barlow-regular" type="text" formControlName="discordName" required />
+
+      <label>Minecraft Naam.</label>
+      <input class="font-barlow-regular" type="text" formControlName="minecraftName" required />
+
+      <label>Hou oud ben je?</label>
+      <input class="font-barlow-regular" type="number" formControlName="age" required />
+
+      <label>Vertel kort iets over jezelf.</label>
+      <textarea class="font-barlow-regular" type="text" formControlName="aboutMe" required></textarea>
+
+      <label>Waar ben jij als speler goed of minder goed in?</label>
+      <textarea class="font-barlow-regular" type="text" formControlName="strengthsAndWeaknesses" required></textarea>
+
+      <label>Waarom moeten we jou inviten?</label>
+      <textarea class="font-barlow-regular" type="text" formControlName="whyYou" required></textarea>
+
+      <label>Heb je een history op DDG?</label>
+      <textarea class="font-barlow-regular" type="text" formControlName="history" required></textarea>
+
+      <label>Is er nog iets anders wat je graag kwijt wil?</label>
+      <textarea class="font-barlow-regular" type="text" formControlName="other"></textarea>
+
+      <button type="submit" [disabled]="applicationForm.invalid">Submit</button>
+    </div>
+  </form>
+</div>
+
+<div *ngIf="authService.hasRoles('ROLE_LEAD')" class="editButtonContainer">
+  <button class="editButton font-barlow-regular" routerLink="./view">Sollicitaties inzien.</button>
+</div>
