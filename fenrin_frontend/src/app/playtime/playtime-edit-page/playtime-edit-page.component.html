@@ -45,7 +45,7 @@
     </div>
 
     <app-modal [isVisible]="showNewPlaytimeModal" (onClose)="closeModal()">
-      <h2 class="form-player-name">Playtime van: {{player.playerName}}</h2>
+      <h2>Playtime van: {{player.playerName}}</h2>
       <form [formGroup]="form" (ngSubmit)="onSubmit(player.playerName)">
         <div class="form-group">
           <label for="year">Jaar</label>
