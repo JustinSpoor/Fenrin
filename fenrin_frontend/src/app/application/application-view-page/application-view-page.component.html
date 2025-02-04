@@ -7,8 +7,10 @@
   <input type="text" [formControl]="searchControl" placeholder="Zoek sollicitatie..." class="search-bar">
 
   <ul class="application-list">
+    <span class="no-applications" *ngIf="filteredApplications.length == 0">Er zijn geen Sollicitaties :(</span>
     <li *ngFor="let application of filteredApplications" class="application-item">
       <span>{{ application.name }}</span>
+
 
       <div class="buttons">
           <button (click)="viewApplication(application)" class="btn btn-edit">Bekijken</button>
