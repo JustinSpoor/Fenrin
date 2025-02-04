@@ -1,9 +1,7 @@
 package nl.kingdom.fenrin.models;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,21 +16,26 @@ public class PlayerApplication {
     @GeneratedValue
     private UUID id;
 
-    private String discordName;
-
     private String name;
+
+    private String discordName;
 
     private String minecraftName;
 
     private int age;
-
+    
+    @Column(columnDefinition = "TEXT")
     private String aboutMe;
 
+    @Column(columnDefinition = "TEXT")
     private String strengthsAndWeaknesses;
 
+    @Column(columnDefinition = "TEXT")
     private String whyYou;
 
+    @Column(columnDefinition = "TEXT")
     private String history;
 
+    @Column(columnDefinition = "TEXT")
     private String other;
 }
