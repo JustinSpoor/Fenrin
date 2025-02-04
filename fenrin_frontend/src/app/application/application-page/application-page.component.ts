@@ -13,9 +13,9 @@ export class ApplicationPageComponent {
 
   constructor(private formBuilder: FormBuilder, private applicationService: ApplicationService, public authService: AuthService) {
     this.applicationForm = this.formBuilder.group({
-      name: ['', Validators.required],
-      discordName: ['', Validators.required],
-      minecraftName: ['', Validators.required],
+      name: ['', [Validators.required, Validators.maxLength(100)]],
+      discordName: ['', [Validators.required, Validators.maxLength(100)]],
+      minecraftName: ['', [Validators.required, Validators.maxLength(100)]],
       age: ['', [Validators.required, Validators.min(10), Validators.max(100)]],
       aboutMe: ['', Validators.required],
       strengthsAndWeaknesses: ['', Validators.required],
@@ -35,5 +35,4 @@ export class ApplicationPageComponent {
         })
     }
   }
-
 }
