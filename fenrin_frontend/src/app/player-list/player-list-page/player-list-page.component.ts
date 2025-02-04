@@ -63,7 +63,6 @@ export class PlayerListPageComponent {
   }
 
   removePlayer(playerId: any) {
-    console.log(playerId)
     this.playerService.deletePlayer(playerId).subscribe(() => {
       this.loadPlayers();
     });
