@@ -1,6 +1,7 @@
 <div class="container font-barlow-regular">
   <h2>Spelerslijst</h2>
   <input type="text" [formControl]="searchControl" placeholder="Zoek speler..." class="search-bar">
+  <span *ngIf="filteredPlayers.length == 0" class="no-players" >Geen spelers :(</span>
 
   <ul class="player-list">
     <li *ngFor="let player of filteredPlayers" class="player-item">
