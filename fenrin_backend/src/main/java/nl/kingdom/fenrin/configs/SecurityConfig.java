@@ -49,6 +49,10 @@ public class SecurityConfig {
             registry.requestMatchers("/players").hasAnyAuthority(Roles.ROLE_LEAD.toString());
             registry.requestMatchers("/players/*").hasAnyAuthority(Roles.ROLE_LEAD.toString());
 
+            // Application routes
+            registry.requestMatchers("/application").permitAll();
+            registry.requestMatchers("/application/*").hasAnyAuthority(Roles.ROLE_LEAD.toString());
+
 
                     try {
                         registry.anyRequest().authenticated().and().cors();
