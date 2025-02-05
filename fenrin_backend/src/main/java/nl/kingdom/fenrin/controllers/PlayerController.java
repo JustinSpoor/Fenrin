@@ -41,7 +41,6 @@ public class PlayerController {
         }
     }
 
-    //todo TEST IF THIS IS WORKING
     @DeleteMapping("/players/{id}")
     public ResponseEntity<?> deletePlayer(@PathVariable UUID id) {
         Optional<Player> toBeDeletedPlayer = this.playerService.getPlayerById(id);
