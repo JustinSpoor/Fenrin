@@ -52,6 +52,7 @@ public class SecurityConfig {
             // Build routes
             registry.requestMatchers("/buildlist").hasAnyAuthority(Roles.ROLE_SPELER.toString());
             registry.requestMatchers("/build").hasAnyAuthority(Roles.ROLE_BOUWLEIDER.toString());
+            registry.requestMatchers("/build/*").hasAnyAuthority(Roles.ROLE_BOUWLEIDER.toString());
 
             // Application routes
             registry.requestMatchers("/application").permitAll();
