@@ -115,16 +115,8 @@ table, th, td {
   text-align: center;
 }
 
-
-
-
-.form-player-name {
-  color: var(--fenrin-blue-color);
-}
-
 .form-group {
   margin: 1rem;
-
 }
 
 .absence {
@@ -150,11 +142,6 @@ button[type="submit"] {
   border: none;
   cursor: pointer;
   border-radius: 4px;
-}
-
-button[type="submit"]:not(:disabled):hover {
-  border: 2px solid var(--fenrin-blue-color);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 button[type="submit"]:disabled {

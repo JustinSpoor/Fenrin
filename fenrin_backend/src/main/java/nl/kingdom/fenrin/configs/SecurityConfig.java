@@ -53,6 +53,11 @@ public class SecurityConfig {
             registry.requestMatchers("/buildlist").hasAnyAuthority(Roles.ROLE_SPELER.toString());
             registry.requestMatchers("/build").hasAnyAuthority(Roles.ROLE_BOUWLEIDER.toString());
 
+            // Application routes
+            registry.requestMatchers("/application").permitAll();
+            registry.requestMatchers("/application/*").hasAnyAuthority(Roles.ROLE_LEAD.toString());
+
+
 
                     try {
                         registry.anyRequest().authenticated().and().cors();
