@@ -25,7 +25,7 @@ public class BuildService {
     }
 
     public Optional<Build> getBuildByName(String buildName) {
-        return this.buildRepository.getBuildByName(buildName);
+        return this.buildRepository.getBuildByBuildName(buildName);
     }
 
     public Build saveBuild(Build build) {

@@ -9,5 +9,5 @@ import java.util.UUID;
 
 public interface BuildRepository extends JpaRepository<Build, UUID> {
 
-    Optional<Build> getBuildByName(String buildName);
+    Optional<Build> getBuildByBuildName(String buildName);
 }
