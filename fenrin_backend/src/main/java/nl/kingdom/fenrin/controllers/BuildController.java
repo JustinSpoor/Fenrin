@@ -18,7 +18,7 @@ public class BuildController {
     private BuildService buildService;
 
 
-    @GetMapping("/build")
+    @GetMapping("/buildlist")
     private ResponseEntity<List<Build>> getAllBuilds() {
         return ResponseEntity.ok(this.buildService.getAllBuilds());
     }
