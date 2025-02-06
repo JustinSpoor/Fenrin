@@ -8,7 +8,7 @@
       <span *ngIf="editingPlayer?.id !== player.id">{{ player.name }} ({{ player.rank }})</span>
 
       <div *ngIf="editingPlayer?.id === player.id">
-        <input [(ngModel)]="editingPlayer.name" placeholder="Naam" class="input-field">
+        <input [(ngModel)]="editingPlayer.name" maxlength="20" placeholder="Naam" class="input-field">
         <select [(ngModel)]="editingPlayer.rank" class="select-field">
           <option value="non-actief">Non-actief</option>
           <option value="afgekeurd">Afgekeurd</option>
