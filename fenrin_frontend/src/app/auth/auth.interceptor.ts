@@ -21,8 +21,7 @@ export class AuthInterceptor implements HttpInterceptor {
     if (this.authService.isTokenExpired()) {
       this.authService.refreshToken();
     }
-
-    console.log(request.url)
+    
     if(request.url.includes(this.refreshTokenEndpoint)) {
       const modifiedRequest = request.clone({
         headers: request.headers.delete('Authorization'),
