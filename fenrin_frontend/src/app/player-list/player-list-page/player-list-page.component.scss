@@ -104,3 +104,14 @@ h2 {
   justify-self: center;
   margin: 1rem 0;
 }
+
+
+.btn-success {
+  background-color: #4caf50;
+  color: var(--fenrin-blue-color);
+}
+
+.btn-cancel {
+  background-color: var(--fenrin-red-color);
+  color: var(--fenrin-blue-color);
+}
