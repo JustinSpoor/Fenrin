@@ -1,1 +1,127 @@
-<p>build-progress-page works!</p>
+<div class="container font-barlow-regular">
+  <h2>Bouw Projecten</h2>
+  <input type="text" [formControl]="searchControl" placeholder="Zoek build..." class="search-bar">
+
+  <ul class="build-list">
+    <li *ngFor="let build of filteredBuilds" class="build-item">
+      <span>{{ build.buildName }} ({{ build.builderInCharge }})</span>
+
+      <div class="buttons">
+        <button (click)="viewBuild(build)" class="btn btn-edit">Bekijken</button>
+        <button (click)="removeBuild(build.id)" class="btn" *ngIf="authService.hasRoles('ROLE_BOUWLEIDER')">Verwijderen</button>
+      </div>
+    </li>
+  </ul>
+
+  <div *ngIf="authService.hasRoles('ROLE_BOUWLEIDER')" class="buttons">
+      <button class="btn btn-add" (click)="addBuild()">Build Toevoegen</button>
+  </div>
+
+</div>
+
+<app-modal class="font-barlow-regular" [isVisible]="isViewingBuild" (onClose)="stopViewingBuild()">
+  <h2>{{ currentlyViewingBuild.buildName }}</h2>
+  <div class="table-wrapper" >
+    <table>
+      <thead>
+      <tr>
+        <th>Build</th>
+        <th>Bouwer</th>
+        <th>Warp</th>
+        <th>Progressie</th>
+        <th>Prioriteit</th>
+      </tr>
+      </thead>
+      <tbody>
+        <tr *ngIf="!isCurrentlyEditingBuild">
+          <td>{{ currentlyViewingBuild.buildName }}</td>
+          <td>{{ currentlyViewingBuild.builderInCharge }}</td>
+          <td>{{ currentlyViewingBuild.warp }}</td>
+          <td>{{ currentlyViewingBuild.progress }}</td>
+          <td>{{ currentlyViewingBuild.priority }}</td>
+        </tr>
+        <tr *ngIf="isCurrentlyEditingBuild" class="bigger-modal">
+          <td><input [(ngModel)]="editingBuild.buildName" placeholder="Naam van de build." class="input-field" maxlength="30"/></td>
+          <td><input [(ngModel)]="editingBuild.builderInCharge" placeholder="Naam van de hoofdbouwer." class="input-field" maxlength="30"/></td>
+          <td><input [(ngModel)]="editingBuild.warp" placeholder="Naam van de warp." class="input-field" maxlength="30"/></td>
+          <td>
+            <select [(ngModel)]="editingBuild.progress" class="select-field">
+              <option value="layout">Layout</option>
+              <option value="in aanbouw">In aanbouw</option>
+              <option value="details">Details</option>
+              <option value="inrichting">Inrichting</option>
+              <option value="schematic maken">Schematic maken</option>
+              <option value="blocks verzamelen">Blocks verzamelen</option>
+              <option value="schematic plaatsen">Schematic plaatsen</option>
+              <option value="klaar">Klaar</option>
+            </select>
+          </td>
+          <td>
+            <select [(ngModel)]="editingBuild.priority" class="select-field">
+              <option value="laag">Laag</option>
+              <option value="gemiddeld">Gemiddeld</option>
+              <option value="hoog">Hoog</option>
+            </select>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="buttons">
+    <button *ngIf="!isCurrentlyEditingBuild && authService.hasRoles('ROLE_BOUWLEIDER')" class="btn btn-edit" (click)="editBuild(currentlyViewingBuild)" >Bewerken</button>
+    <button *ngIf="isCurrentlyEditingBuild" class="btn btn-success" (click)="updateBuild()" [disabled]="isUpdateButtonDisabled()" >opslaan</button>
+    <button *ngIf="isCurrentlyEditingBuild" class="btn btn-cancel" (click)="cancelEdit()" >annuleren</button>
+  </div>
+</app-modal>
+
+<app-modal class="font-barlow-regular" [isVisible]="isAddingBuild" (onClose)="cancelAddingBuild()">
+  <h2>Build Toevoegen</h2>
+
+  <form [formGroup]="buildForm" (ngSubmit)="onSubmit()">
+
+  <div class="table-wrapper" >
+    <table>
+      <thead>
+      <tr>
+        <th>Build</th>
+        <th>Bouwer</th>
+        <th>Warp</th>
+        <th>Progressie</th>
+        <th>Prioriteit</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr class="bigger-modal">
+          <td><input placeholder="Naam van de build." class="input-field" maxlength="30" formControlName="buildName"/></td>
+          <td><input placeholder="Naam van de hoofdbouwer." class="input-field" maxlength="30" formControlName="builderInCharge"/></td>
+          <td><input placeholder="Naam van de warp." class="input-field" maxlength="30" formControlName="warp"/></td>
+          <td>
+            <select class="select-field" formControlName="progress">
+              <option value="layout">Layout</option>
+              <option value="in aanbouw">In aanbouw</option>
+              <option value="details">Details</option>
+              <option value="inrichting">Inrichting</option>
+              <option value="schematic maken">Schematic maken</option>
+              <option value="blocks verzamelen">Blocks verzamelen</option>
+              <option value="schematic plaatsen">Schematic plaatsen</option>
+              <option value="klaar">Klaar</option>
+            </select>
+          </td>
+          <td>
+            <select class="select-field" formControlName="priority">
+              <option value="laag">Laag</option>
+              <option value="gemiddeld">Gemiddeld</option>
+              <option value="hoog">Hoog</option>
+            </select>
+          </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="buttons">
+    <button type="submit" class="btn btn-success" [disabled]="buildForm.invalid">Opslaan</button>
+  </div>
+  </form>
+</app-modal>
