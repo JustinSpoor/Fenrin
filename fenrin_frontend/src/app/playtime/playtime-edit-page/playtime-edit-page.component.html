@@ -41,12 +41,12 @@
       </table>
     </div>
     <div class="addButtonContainer">
-      <button class="addButton font-barlow-regular" (click)="addNewPlaytime()">Toevoegen</button>
+      <button class="addButton font-barlow-regular" (click)="addNewPlaytime(player)">Toevoegen</button>
     </div>
 
     <app-modal [isVisible]="showNewPlaytimeModal" (onClose)="closeModal()">
-      <h2>Playtime van: {{player.playerName}}</h2>
-      <form [formGroup]="form" (ngSubmit)="onSubmit(player.playerName)">
+      <h2 *ngIf="addingPlayer">Playtime van: {{addingPlayer.playerName}}</h2>
+      <form [formGroup]="form" (ngSubmit)="onSubmit(addingPlayer.playerName)">
         <div class="form-group">
           <label for="year">Jaar</label>
           <input type="number" id="year" formControlName="year" placeholder="Jaar">

@@ -12,7 +12,7 @@ export class PlaytimeEditPageComponent {
   playerList: any = [];
   showNewPlaytimeModal = false;
   form: FormGroup;
-
+  addingPlayer: any | null = null;
 
   constructor(public authService: AuthService, private playtimeService: PlaytimeService, private formBuilder: FormBuilder) {
     this.form = this.formBuilder.group({
@@ -26,7 +26,6 @@ export class PlaytimeEditPageComponent {
   }
 
 
-
   ngOnInit() {
     this.loadPlaytimes();
   }
@@ -38,15 +37,16 @@ export class PlaytimeEditPageComponent {
       });
   }
 
-  addNewPlaytime() {
+  addNewPlaytime(player: any) {
     this.showNewPlaytimeModal = true;
+    this.addingPlayer = { ...player}
   }
 
   closeModal() {
     this.showNewPlaytimeModal = false;
     this.form.reset();
+    this.addingPlayer = null;
   }
-
 
   formatNewPlaytime() {
     const year = this.form.get('year')?.value;
