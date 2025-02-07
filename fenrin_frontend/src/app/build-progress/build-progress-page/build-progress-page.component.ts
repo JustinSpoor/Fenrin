@@ -83,7 +83,7 @@ export class BuildProgressPageComponent {
           if (error.toString().includes(409)) {
             this.toasterService.showError(`Er bestaat al een bouw project met de naam ${this.editingBuild.buildName}`, 'Error')
           }
-          
+
         }
       })
     }

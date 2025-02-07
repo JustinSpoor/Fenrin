@@ -9,7 +9,7 @@
   <ul class="application-list">
     <span class="no-applications" *ngIf="filteredApplications.length == 0">Geen Sollicitaties :(</span>
     <li *ngFor="let application of filteredApplications" class="application-item">
-      <span>{{ application.name }}</span>
+      <span>{{ application.name }} ({{ application.minecraftName }})</span>
 
 
       <div class="buttons">
@@ -25,6 +25,7 @@
   <ul class="currently-viewing-application">
     <li>
       <p><strong>Discord:</strong> {{ currentlyViewingApplication.discordName }}</p>
+      <p><strong>Minecraft:</strong> {{ currentlyViewingApplication.minecraftName }}</p>
       <p><strong>Leeftijd:</strong> {{ currentlyViewingApplication.age }}</p>
       <p><strong>Over mij:</strong> {{ currentlyViewingApplication.aboutMe }}</p>
       <p><strong>Plus- en minpunten:</strong> {{ currentlyViewingApplication.strengthsAndWeaknesses }}</p>
