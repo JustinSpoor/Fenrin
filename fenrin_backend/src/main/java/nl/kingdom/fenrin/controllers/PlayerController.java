@@ -31,11 +31,16 @@ public class PlayerController {
     @PatchMapping("/players")
     public ResponseEntity<?> updatePlayer(@RequestBody Player player) {
         Optional<Player> toBeUpdatedPlayer = this.playerService.getPlayerById(player.getId());
+        Optional<Player> checkIfNameIsAlreadyUsed = this.playerService.getPlayerByName(player.getName());
 
         if(toBeUpdatedPlayer.isPresent()) {
-            toBeUpdatedPlayer.get().setName(player.getName());
-            toBeUpdatedPlayer.get().setRank(player.getRank());
-            return ResponseEntity.ok(this.playerService.updatePlayer(toBeUpdatedPlayer.get()));
+            if(checkIfNameIsAlreadyUsed.isEmpty()) {
+                toBeUpdatedPlayer.get().setName(player.getName());
+                toBeUpdatedPlayer.get().setRank(player.getRank());
+                return ResponseEntity.ok(this.playerService.updatePlayer(toBeUpdatedPlayer.get()));
+            } else {
+                return ResponseEntity.status(409).body("Player with name: " + player.getName() + " already exists");
+            }
         } else {
             return ResponseEntity.status(404).body("Could not find player with id " + player.getId());
         }

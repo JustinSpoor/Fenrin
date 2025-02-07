@@ -90,8 +90,15 @@ export class PlayerListPageComponent {
           this.editingPlayer = null;
           this.toasterService.showSuccess(`Speler aangepast!`, 'Aangepast');
         },
-        error: () => {
-          this.toasterService.showError('De speler die je probeerd te updaten bestaat niet', 'Error');
+        error: (error) => {
+
+          if(error.toString().includes(404)) {
+            this.toasterService.showError('De speler die je probeerd te updaten bestaat niet', 'Error');
+          }
+
+          if(error.toString().includes(409)) {
+            this.toasterService.showError(`Er bestaal al een speler met de naam ${this.editingPlayer.name}`, 'Error');
+          }
         }
       })
     }

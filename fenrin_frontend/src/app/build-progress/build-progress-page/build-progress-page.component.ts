@@ -74,8 +74,16 @@ export class BuildProgressPageComponent {
           this.editingBuild = null;
           this.stopViewingBuild();
         },
-        error: () => {
-          this.toasterService.showError(`Het bouw project dat je probeerd aan te passen bestaat niet.`, 'Error')
+        error: (error) => {
+
+          if (error.toString().includes(404)) {
+            this.toasterService.showError(`Het bouw project dat je probeerd aan te passen bestaat niet.`, 'Error')
+          }
+
+          if (error.toString().includes(409)) {
+            this.toasterService.showError(`Er bestaat al een bouw project met de naam ${this.editingBuild.buildName}`, 'Error')
+          }
+          
         }
       })
     }
