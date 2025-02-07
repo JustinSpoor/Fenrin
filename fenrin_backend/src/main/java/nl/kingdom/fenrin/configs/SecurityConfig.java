@@ -36,8 +36,6 @@ public class SecurityConfig {
                 .csrf().disable()
                 .authorizeHttpRequests(registry -> {
 
-//  TODO hierin kan je de aangeven welke role bij welk endpoint kan!
-
             //Auth routes
             registry.requestMatchers("/authenticate", "/refreshtoken", "/register").permitAll();
 
@@ -57,7 +55,6 @@ public class SecurityConfig {
             // Application routes
             registry.requestMatchers("/application").permitAll();
             registry.requestMatchers("/application/*").hasAnyAuthority(Roles.ROLE_LEAD.toString());
-
 
 
                     try {
