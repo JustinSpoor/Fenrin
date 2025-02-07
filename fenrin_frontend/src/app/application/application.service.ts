@@ -1,23 +1,24 @@
-import {HttpClient} from "@angular/common/http";
 import {Injectable} from "@angular/core";
+import {HttpService} from "../shared/http.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApplicationService {
+  applicationRoute: string = 'application'
 
-  constructor(private http: HttpClient) {
+  constructor(private httpService: HttpService) {
   }
 
   postApplication(application: any) {
-    return this.http.post('http://localhost:8080/application', application)
+    return this.httpService.httpPost(this.applicationRoute, application)
   }
 
   getApplications() {
-    return this.http.get<any>('http://localhost:8080/application')
+    return this.httpService.httpGet(this.applicationRoute)
   }
 
   deleteApplication(id: any) {
-    return this.http.delete(`http://localhost:8080/application/${id}`);
+    return this.httpService.httpDelete(this.applicationRoute, id);
   }
 }

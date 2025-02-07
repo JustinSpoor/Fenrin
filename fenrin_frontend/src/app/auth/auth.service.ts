@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject, Observable, tap} from "rxjs";
-import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {jwtDecode} from "jwt-decode";
+import {HttpService} from "../shared/http.service";
 
 @Injectable({
   providedIn: 'root'
@@ -14,15 +14,13 @@ export class AuthService {
   private loggedUser?: String;
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
 
-  constructor(private http: HttpClient, private router: Router) { }
-
-//TODO vervang api path met env variable
+  constructor(private httpService: HttpService, private router: Router) { }
 
   login(user: {
     username: string,
     password: string
   }): Observable<any>{
-    return this.http.post('http://localhost:8080/authenticate', user).pipe(
+    return this.httpService.httpPost('authenticate', user).pipe(
       tap((response: any) => {
         this.doLoginUser(user.username, response.token, response.refreshToken)})
     )
@@ -62,9 +60,7 @@ export class AuthService {
     if (!decoded.exp) return true;
 
     const experationDate = decoded.exp * 1000;
-    console.log(experationDate)
     const now = new Date().getTime();
-    console.log(now)
 
     return experationDate < now;
   }
@@ -82,8 +78,8 @@ export class AuthService {
       "refreshToken": refreshToken
     }
 
-    return this.http
-      .post<any>('http://localhost:8080/refreshtoken', refreshTokenMap)
+    return this.httpService
+      .httpPost('refreshtoken', refreshTokenMap)
       .pipe(tap((response: any) => this.storeJwtToken(response.token))).subscribe();
   }
 

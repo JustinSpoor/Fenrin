@@ -1,24 +1,24 @@
-import {HttpClient} from "@angular/common/http";
 import {Injectable} from "@angular/core";
+import {HttpService} from "../shared/http.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlaytimeService {
 
-  constructor(private http: HttpClient) {
+  constructor(private httpService: HttpService) {
   }
 
 
   fetchPlayerPlaytimeListDESC() {
-    return this.http.get<any>('http://localhost:8080/descplaytimelist');
+    return this.httpService.httpGet('descplaytimelist');
   }
 
   fetchPlayerPlaytimeListASC() {
-    return this.http.get<any>('http://localhost:8080/ascplaytimelist');
+    return this.httpService.httpGet('ascplaytimelist');
   }
 
   postPlayerPlaytime(playtime: any) {
-    return this.http.post<any>('http://localhost:8080/playtime', playtime);
+    return this.httpService.httpPost('playtime', playtime);
   }
 }

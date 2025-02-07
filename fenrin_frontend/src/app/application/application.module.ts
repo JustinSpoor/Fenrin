@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ApplicationPageComponent } from './application-page/application-page.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {HttpClientModule} from "@angular/common/http";
 import { ApplicationViewPageComponent } from './application-view-page/application-view-page.component';
 import {ApplicationRoutingModule} from "./application-routing.module";
 import {SharedModule} from "../shared/shared.module";
@@ -19,7 +18,6 @@ import {SharedModule} from "../shared/shared.module";
     FormsModule,
     ApplicationRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule,
     SharedModule,
   ]
 })
