@@ -17,6 +17,8 @@ import {AuthInterceptor} from "./auth/auth.interceptor";
 import {ReactiveFormsModule} from "@angular/forms";
 import {PlayerListModule} from "./player-list/player-list.module";
 import {ApplicationModule} from "./application/application.module";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {ToastrModule} from "ngx-toastr";
 
 
 @NgModule({
@@ -25,6 +27,12 @@ import {ApplicationModule} from "./application/application.module";
   ],
     imports: [
         BrowserModule,
+        BrowserAnimationsModule,
+        ToastrModule.forRoot({
+          timeOut: 3000,
+          positionClass: 'toast-top-right',
+          preventDuplicates: false
+        }),
         HttpClientModule,
         AppRoutingModule,
         HeaderModule,

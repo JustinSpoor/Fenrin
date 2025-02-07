@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ApplicationService} from "../application.service";
 import {AuthService} from "../../auth/auth.service";
+import {ToastService} from "../../shared/toast.service";
 
 @Component({
   selector: 'app-application-page',
@@ -11,7 +12,7 @@ import {AuthService} from "../../auth/auth.service";
 export class ApplicationPageComponent {
   applicationForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private applicationService: ApplicationService, public authService: AuthService) {
+  constructor(private formBuilder: FormBuilder, private applicationService: ApplicationService, public authService: AuthService, private toasterService: ToastService) {
     this.applicationForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.maxLength(100)]],
       discordName: ['', [Validators.required, Validators.maxLength(100)]],
@@ -29,9 +30,14 @@ export class ApplicationPageComponent {
   onSubmit() {
     if (this.applicationForm.valid) {
       this.applicationService.postApplication(this.applicationForm.value)
-        .subscribe((response) => {
-          //todo add confirmation/error shizzle here
-          this.applicationForm.reset();
+        .subscribe({
+          next: () => {
+            this.toasterService.showSuccess('Sollicitatie verstuurd!', 'Verstuurd!')
+            this.applicationForm.reset();
+          },
+          error: () => {
+            this.toasterService.showError('Er is iets mis gegaan met het versturen van je sollicitatie, probeer het opnieuw', 'Error')
+          }
         })
     }
   }

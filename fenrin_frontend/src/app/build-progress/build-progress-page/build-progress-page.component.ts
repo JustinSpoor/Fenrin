@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {BuildProgressService} from "../build-progress.service";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../../auth/auth.service";
+import {ToastService} from "../../shared/toast.service";
 
 @Component({
   selector: 'app-build-progress-page',
@@ -19,7 +20,7 @@ export class BuildProgressPageComponent {
   isAddingBuild: boolean = false;
   buildForm: FormGroup;
 
-  constructor(private buildService: BuildProgressService, public authService: AuthService, private formBuilder: FormBuilder) {
+  constructor(private buildService: BuildProgressService, public authService: AuthService, private formBuilder: FormBuilder, private toasterService: ToastService) {
     this.buildForm = this.formBuilder.group({
       buildName: ['', [Validators.required, Validators.maxLength(30)]],
       builderInCharge: ['', [Validators.required, Validators.maxLength(30)]],
@@ -66,10 +67,16 @@ export class BuildProgressPageComponent {
 
   updateBuild() {
     if(this.editingBuild) {
-      this.buildService.updateBuild(this.editingBuild).subscribe(() => {
-        this.loadBuilds();
-        this.editingBuild = null;
-        this.stopViewingBuild();
+      this.buildService.updateBuild(this.editingBuild).subscribe({
+        next: () => {
+          this.toasterService.showSuccess(`Bouw project ${this.editingBuild.buildName} aangepast.`, 'Aangepast')
+          this.loadBuilds();
+          this.editingBuild = null;
+          this.stopViewingBuild();
+        },
+        error: () => {
+          this.toasterService.showError(`Het bouw project dat je probeerd aan te passen bestaat niet.`, 'Error')
+        }
       })
     }
   }
@@ -89,9 +96,15 @@ export class BuildProgressPageComponent {
   }
 
   removeBuild(id: any) {
-    this.buildService.deleteBuild(id).subscribe( () => {
+    this.buildService.deleteBuild(id).subscribe({
+      next: () => {
         this.loadBuilds();
-      });
+        this.toasterService.showInfo('Bouw project verwijderd.', 'Verwijderd')
+      },
+      error: () => {
+        this.toasterService.showError('Dit bouw project was al verwijderd.', 'Error')
+      }
+    })
   }
 
   addBuild() {
@@ -106,11 +119,16 @@ export class BuildProgressPageComponent {
   onSubmit() {
     if(this.buildForm.valid) {
       this.buildService.saveBuild(this.buildForm.value)
-        .subscribe(() => {
-          //todo add confirmation/error shizzle here
-          this.buildForm.reset();
-          this.isAddingBuild = false;
-          this.loadBuilds();
+        .subscribe({
+          next: () => {
+            this.toasterService.showSuccess(`Bouw project ${this.buildForm.get('buildName')?.value} sucessvol toegevoegd`, 'sucess');
+            this.buildForm.reset();
+            this.isAddingBuild = false;
+            this.loadBuilds();
+          },
+          error: () => {
+            this.toasterService.showError(`Bouw project met de naam ${this.buildForm.get('buildName')?.value} bestaat al.`, 'Error');
+          }
         })
     }
   }

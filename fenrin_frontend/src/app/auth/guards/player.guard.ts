@@ -1,7 +1,7 @@
-//TODO make player guard (players can access additional pages (playtime, bouw, punten) but not edit the pages)
 import {CanActivate, Router} from "@angular/router";
 import {AuthService} from "../auth.service";
 import {Injectable} from "@angular/core";
+import {ToastService} from "../../shared/toast.service";
 
 
 @Injectable({
@@ -9,11 +9,12 @@ import {Injectable} from "@angular/core";
 })
 
 export class PlayerGuard implements  CanActivate{
-  constructor(private authService: AuthService, private router: Router) {  }
+  constructor(private authService: AuthService, private router: Router, private toasterService: ToastService) {  }
 
   canActivate(): boolean {
     if (!this.authService.hasRoles('ROLE_SPELER')) {
       this.router.navigate(['/login'])
+      this.toasterService.showWarning('Je hebt niet de juiste permissies om naar deze pagina te gaan.', 'Waarschuwing')
       return false;
     }
     return true;

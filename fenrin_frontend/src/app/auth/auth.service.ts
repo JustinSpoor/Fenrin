@@ -3,6 +3,7 @@ import {BehaviorSubject, Observable, tap} from "rxjs";
 import {Router} from "@angular/router";
 import {jwtDecode} from "jwt-decode";
 import {HttpService} from "../shared/http.service";
+import {ToastService} from "../shared/toast.service";
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class AuthService {
   private loggedUser?: String;
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
 
-  constructor(private httpService: HttpService, private router: Router) { }
+  constructor(private httpService: HttpService, private router: Router, private toasterService: ToastService) { }
 
   login(user: {
     username: string,
@@ -111,5 +112,6 @@ export class AuthService {
     localStorage.removeItem(this.JWT_REFRESH_TOKEN);
     this.isAuthenticatedSubject.next(false);
     this.router.navigate(['/home'])
+    this.toasterService.showInfo('', 'Uitgelogd')
   }
 }

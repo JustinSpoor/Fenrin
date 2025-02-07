@@ -1,5 +1,6 @@
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {Injectable} from "@angular/core";
+import {catchError, Observable, throwError} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -11,19 +12,31 @@ export class HttpService {
   constructor(private http: HttpClient) {
   }
 
-  httpGet(route: string) {
-    return this.http.get<any>(`${this.API_PATH}/${route}`);
+  private handleError(error: HttpErrorResponse) {
+    return throwError(() => new Error(error.message));
   }
 
-  httpPatch(route: string, body: any) {
-    return this.http.patch(`${this.API_PATH}/${route}`, body);
+  httpGet(route: string): Observable<any> {
+    return this.http.get<any>(`${this.API_PATH}/${route}`).pipe(
+      catchError(this.handleError)
+    );
   }
 
-  httpDelete(route: string, id: any) {
-    return this.http.delete(`${this.API_PATH}/${route}/${id}`)
+  httpPatch(route: string, body: any): Observable<any> {
+    return this.http.patch(`${this.API_PATH}/${route}`, body).pipe(
+      catchError(this.handleError)
+    );
   }
 
-  httpPost(route: string, body: any) {
-    return this.http.post(`${this.API_PATH}/${route}`, body)
+  httpDelete(route: string, id: any): Observable<any> {
+    return this.http.delete(`${this.API_PATH}/${route}/${id}`).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  httpPost(route: string, body: any): Observable<any> {
+    return this.http.post(`${this.API_PATH}/${route}`, body).pipe(
+      catchError(this.handleError)
+    );
   }
 }

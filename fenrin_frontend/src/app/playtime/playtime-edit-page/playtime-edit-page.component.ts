@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {AuthService} from "../../auth/auth.service";
 import {PlaytimeService} from "../playtime.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {ToastService} from "../../shared/toast.service";
 @Component({
   selector: 'app-playtime-edit-page',
   templateUrl: './playtime-edit-page.component.html',
@@ -14,7 +15,7 @@ export class PlaytimeEditPageComponent {
   form: FormGroup;
   addingPlayer: any | null = null;
 
-  constructor(public authService: AuthService, private playtimeService: PlaytimeService, private formBuilder: FormBuilder) {
+  constructor(public authService: AuthService, private playtimeService: PlaytimeService, private formBuilder: FormBuilder, private toasterService: ToastService) {
     this.form = this.formBuilder.group({
       year: ["", [Validators.required, Validators.min(2020), Validators.max(new Date().getFullYear())]],
       week: ['', [Validators.required, Validators.min(1), Validators.max(52)]],
@@ -94,11 +95,16 @@ export class PlaytimeEditPageComponent {
       }
 
       this.playtimeService.postPlayerPlaytime(playtime)
-        .subscribe((response) => {
-          //todo add confirmation/error shizzle here
-          this.loadPlaytimes();
-          this.closeModal();
-        });
+        .subscribe({
+          next: () => {
+            this.loadPlaytimes();
+            this.closeModal();
+            this.toasterService.showSuccess(`Playtime toegevoegd aan ${playtime.name}`, 'Toegevoegd');
+          },
+          error: () => {
+            this.toasterService.showError(`Er bestaat geen speler met de naam ${playtime.name}`, 'Error')
+          }
+        })
     }
   }
 }

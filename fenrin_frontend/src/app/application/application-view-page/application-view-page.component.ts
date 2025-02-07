@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {FormControl} from "@angular/forms";
 import {ApplicationService} from "../application.service";
+import {ToastService} from "../../shared/toast.service";
 
 @Component({
   selector: 'app-application-view-page',
@@ -15,7 +16,7 @@ export class ApplicationViewPageComponent {
   isViewingApplication: boolean = false;
 
 
-  constructor(private applicationService: ApplicationService) {
+  constructor(private applicationService: ApplicationService, private toasterService: ToastService) {
   }
 
   ngOnInit() {
@@ -49,8 +50,14 @@ export class ApplicationViewPageComponent {
   }
 
   removeApplication(applicationId: any) {
-    this.applicationService.deleteApplication(applicationId).subscribe(() => {
-      this.loadApplications();
-    });
+    this.applicationService.deleteApplication(applicationId).subscribe({
+      next: () => {
+        this.loadApplications();
+        this.toasterService.showInfo('Sollicitatie verwijderd', 'Verwijderd')
+      },
+      error: () => {
+        this.toasterService.showError('Deze sollicitatie was al verwijderd.', 'Error')
+      }
+    })
   }
 }

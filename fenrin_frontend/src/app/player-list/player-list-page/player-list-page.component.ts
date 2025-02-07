@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {FormControl} from "@angular/forms";
 import {PlayerListService} from "../player-list.service";
+import {ToastService} from "../../shared/toast.service";
 
 @Component({
   selector: 'app-player-list-page',
@@ -16,7 +17,7 @@ export class PlayerListPageComponent {
   newPlayerRank: string = 'sfeerproever';
   whitelistSlots: number = 45;
 
-  constructor(private playerService: PlayerListService) {}
+  constructor(private playerService: PlayerListService, private toasterService: ToastService) {}
 
   ngOnInit() {
     this.loadPlayers();
@@ -56,24 +57,43 @@ export class PlayerListPageComponent {
     this.playerService.savePlayer({
       name: name,
       rank: rank
-    }).subscribe( () => {
-      this.loadPlayers();
-      this.resetPlayerForm();
-    })
+    }).subscribe(  {
+      next: () => {
+        this.loadPlayers();
+        this.resetPlayerForm();
+        this.toasterService.showSuccess(`Speler ${name} succesvol toegevoegd.` , `success`);
+      },
+      error: () => {
+        this.toasterService.showError(`Speler met de naam ${name} bestaat al.`, "Error");
+      }
+    });
   }
 
   removePlayer(playerId: any) {
-    this.playerService.deletePlayer(playerId).subscribe(() => {
-      this.loadPlayers();
+    this.playerService.deletePlayer(playerId).subscribe( {
+      next: () => {
+        this.loadPlayers()
+        this.toasterService.showInfo(`Speler verwijderd!`, 'Verwijderd');
+      },
+      error: () => {
+        this.toasterService.showError('De speler met deze naam was al verwijderd.', 'Error')
+      }
     });
+
   }
 
   updatePlayer() {
     if (this.editingPlayer) {
-      this.playerService.updatePlayer(this.editingPlayer).subscribe(() => {
-        this.loadPlayers();
-        this.editingPlayer = null;
-      });
+      this.playerService.updatePlayer(this.editingPlayer).subscribe({
+        next: () => {
+          this.loadPlayers();
+          this.editingPlayer = null;
+          this.toasterService.showSuccess(`Speler aangepast!`, 'Aangepast');
+        },
+        error: () => {
+          this.toasterService.showError('De speler die je probeerd te updaten bestaat niet', 'Error');
+        }
+      })
     }
   }
 
