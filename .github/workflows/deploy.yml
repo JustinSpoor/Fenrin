@@ -33,16 +33,16 @@ jobs:
       # Build and push frontend Docker image
       - name: Build and Push Frontend Docker Image
         run: |
-          docker build -t ${{secrets.DOCKER_USERNAME}}/angular-frontend ./fenrin_frontend
+          docker build -t ${{secrets.DOCKER_USERNAME}}/angular-frontend:latest ./fenrin_frontend
           docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
-          docker push ${{ secrets.DOCKER_USERNAME }}/angular-frontend
+          docker push ${{ secrets.DOCKER_USERNAME }}/angular-frontend:latest
 
       # Build and push backend Docker image
       - name: Build and Push Backend Docker Image
         run: |
-          docker build -t ${{secrets.DOCKER_USERNAME}}/spring-boot-backend ./fenrin_backend
+          docker build -t ${{secrets.DOCKER_USERNAME}}/spring-boot-backend:latest ./fenrin_backend
           docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
-          docker push ${{secrets.DOCKER_USERNAME}}/spring-boot-backend
+          docker push ${{secrets.DOCKER_USERNAME}}/spring-boot-backend:latest
 
       - name: Setup SSH key
         run: | 
@@ -58,6 +58,5 @@ jobs:
           ssh -i key.pem -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "sudo docker pull ${{secrets.DOCKER_USERNAME}}/angular-frontend"
           ssh -i key.pem -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "sudo docker pull ${{secrets.DOCKER_USERNAME}}/spring-boot-backend"
           ssh -i key.pem -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "cd /home/fenrin/fenrin-app"
-          ssh -i key.pem -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "pwd"
           ssh -i key.pem -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "docker compose -f /home/fenrin/fenrin-app/docker-compose.yml down"
           ssh -i key.pem -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "docker compose -f /home/fenrin/fenrin-app/docker-compose.yml up -d"
