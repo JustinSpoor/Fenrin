@@ -44,6 +44,10 @@ jobs:
           docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
           docker push ${{secrets.DOCKER_USERNAME}}/spring-boot-backend
 
+      - name: Setup SSH key
+        run: | 
+          echo "${{ secrets.VPS_SSH_KEY }}" > key.pem
+
       # Deploy to VPS using SSH
       - name: SSH to VPS and Deploy
 #        uses: appleboy/ssh-action@v0.1.0
@@ -53,7 +57,7 @@ jobs:
 #          key: |
 #            ${{ secrets.VPS_SSH_KEY }}
         run: |
-          ssh -i ${{ secrets.VPS_SSH_KEY }} root@${{ VPS_HOST }}
+          ssh -i key.pem ${{ VPS_USER }}@${{ VPS_HOST }}
           mkdir -p /home/fenrin/fenrin-app
           cd /home/fenrin/fenrin-app
           docker pull ${{secrets.DOCKER_USERNAME}}/angular-frontend
