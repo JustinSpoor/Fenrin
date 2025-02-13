@@ -4,6 +4,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +17,8 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class JwtService {
 
-//    TODO PUT THIS SECRET KEY INTO ENV VARIABLE ON GITHUB
+    @Value("${API_SECRET_KEY}")
+    private static String SECRET;
     private static final long TOKEN_VALIDITY_TIME = TimeUnit.MINUTES.toMillis(60);
     private static final long REFRESH_TOKEN_VALIDITY_TIME = TimeUnit.HOURS.toMillis(24);
 

@@ -1,12 +1,13 @@
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {Injectable} from "@angular/core";
 import {catchError, Observable, throwError} from "rxjs";
+import {environment} from "../../environments/environment.prod";
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpService {
-  API_PATH: string = 'http://localhost:8080';
+  API_PATH: string = environment.API_PATH;
 
 
   constructor(private http: HttpClient) {
