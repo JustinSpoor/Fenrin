@@ -58,7 +58,7 @@ jobs:
 #          key: |
 #            ${{ secrets.VPS_SSH_KEY }}
         run: |
-          ssh -i key.pem ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}
+          ssh -i key.pem -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}
           mkdir -p /home/fenrin/fenrin-app
           cd /home/fenrin/fenrin-app
           docker pull ${{secrets.DOCKER_USERNAME}}/angular-frontend
