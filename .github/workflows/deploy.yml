@@ -57,5 +57,5 @@ jobs:
           cd /home/fenrin/fenrin-app
           sudo docker pull ${{secrets.DOCKER_USERNAME}}/angular-frontend
           sudo docker pull ${{secrets.DOCKER_USERNAME}}/spring-boot-backend
-          docker compose -f docker-compose.yml down
-          docker compose -f docker-compose.yml up -d
+          docker compose -f ~/docker-compose.yml down
+          docker compose -f ~/docker-compose.yml up -d
