@@ -47,15 +47,16 @@ jobs:
       # Deploy to VPS using SSH
       - name: SSH to VPS and Deploy
         uses: appleboy/ssh-action@v0.1.0
-        with:
-          host: ${{ secrets.VPS_HOST }}
-          username: root
-          key: | 
-            ${{ secrets.VPS_SSH_KEY }}
-          script: |
-            mkdir -p /home/fenrin/fenrin-app
-            cd /home/fenrin/fenrin-app
-            docker pull ${{secrets.DOCKER_USERNAME}}/angular-frontend
-            docker pull ${{secrets.DOCKER_USERNAME}}/spring-boot-backend
-            docker-compose down
-            docker-compose up -d
+#        with:
+#          host: ${{ secrets.VPS_HOST }}
+#          username: root
+#          key: |
+#            ${{ secrets.VPS_SSH_KEY }}
+        script: |
+          ssh -i ${{ secrets.VPS_SSH_KEY }} ${{ VPS_USER }}@${{ VPS_HOST }}
+          mkdir -p /home/fenrin/fenrin-app
+          cd /home/fenrin/fenrin-app
+          docker pull ${{secrets.DOCKER_USERNAME}}/angular-frontend
+          docker pull ${{secrets.DOCKER_USERNAME}}/spring-boot-backend
+          docker-compose down
+          docker-compose up -d
