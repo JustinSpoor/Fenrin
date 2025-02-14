@@ -6,24 +6,14 @@ COPY package*.json ./
 
 RUN npm install
 
-COPY . .
+COPY .. .
 
 RUN npm run build --prod
 
 # Stage 2: Serve Angular app using Nginx
-FROM alpine:latest
-
-# Install Nginx and other necessary dependencies
-RUN apk update && apk add --no-cache nginx
-
-# Set the working directory
-WORKDIR /frontend
+FROM nginx:alpine
 
 # Copy the built Angular app to the Nginx HTML directory
 COPY --from=build /app/dist/fenrin_frontend/ /usr/share/nginx/html/
 
-# Expose the default HTTP port for Nginx
-EXPOSE 80
-
-# Start Nginx in the foreground
-CMD ["nginx", "-g", "daemon off;"]
+COPY nginx.conf /etc/nginx/conf.d/default.conf
