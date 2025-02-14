@@ -12,6 +12,8 @@ RUN npm run build --prod
 
 FROM nginx:alpine
 
+RUN apk add --no-cache nginx
+
 COPY --from=build /app/dist/fenrin_frontend/ /usr/share/nginx/html
 
 EXPOSE 80
