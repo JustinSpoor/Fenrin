@@ -37,24 +37,24 @@ public class SecurityConfig {
                 .authorizeHttpRequests(registry -> {
 
             //Auth routes
-            registry.requestMatchers("/authenticate", "/refreshtoken", "/register").permitAll();
+            registry.requestMatchers("/api/authenticate", "/api/refreshtoken", "/api/register").permitAll();
 
             // Playtime routes
-            registry.requestMatchers("/playtimelist").hasAnyAuthority(Roles.ROLE_SPELER.toString());
-            registry.requestMatchers("/playtime").hasAnyAuthority(Roles.ROLE_LEAD.toString());
+            registry.requestMatchers("/api/playtimelist").hasAnyAuthority(Roles.ROLE_SPELER.toString());
+            registry.requestMatchers("/api/playtime").hasAnyAuthority(Roles.ROLE_LEAD.toString());
 
             // Player routes
-            registry.requestMatchers("/players").hasAnyAuthority(Roles.ROLE_LEAD.toString());
-            registry.requestMatchers("/players/*").hasAnyAuthority(Roles.ROLE_LEAD.toString());
+            registry.requestMatchers("/api/players").hasAnyAuthority(Roles.ROLE_LEAD.toString());
+            registry.requestMatchers("/api/players/*").hasAnyAuthority(Roles.ROLE_LEAD.toString());
 
             // Build routes
-            registry.requestMatchers("/buildlist").hasAnyAuthority(Roles.ROLE_SPELER.toString());
-            registry.requestMatchers("/build").hasAnyAuthority(Roles.ROLE_BOUWLEIDER.toString());
-            registry.requestMatchers("/build/*").hasAnyAuthority(Roles.ROLE_BOUWLEIDER.toString());
+            registry.requestMatchers("/api/buildlist").hasAnyAuthority(Roles.ROLE_SPELER.toString());
+            registry.requestMatchers("/api/build").hasAnyAuthority(Roles.ROLE_BOUWLEIDER.toString());
+            registry.requestMatchers("/api/build/*").hasAnyAuthority(Roles.ROLE_BOUWLEIDER.toString());
 
             // Application routes
-            registry.requestMatchers("/application").permitAll();
-            registry.requestMatchers("/application/*").hasAnyAuthority(Roles.ROLE_LEAD.toString());
+            registry.requestMatchers("/api/application").permitAll();
+            registry.requestMatchers("/api/application/*").hasAnyAuthority(Roles.ROLE_LEAD.toString());
 
 
                     try {
