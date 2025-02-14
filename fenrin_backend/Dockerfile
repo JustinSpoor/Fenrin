@@ -1,4 +1,4 @@
-FROM jumpserver/maven:3.9.4-openjdk-17-slim-buster AS build
+FROM maven:3.9.4 AS build
 
 WORKDIR /app
 
