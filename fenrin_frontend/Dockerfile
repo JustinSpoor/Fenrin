@@ -22,8 +22,6 @@ WORKDIR /frontend
 # Copy the built Angular app to the Nginx HTML directory
 COPY --from=build /app/dist/fenrin_frontend/ /usr/share/nginx/html/
 
-COPY nginx.conf /etc/nginx/nginx.conf
-
 # Expose the default HTTP port for Nginx
 EXPOSE 80
 
