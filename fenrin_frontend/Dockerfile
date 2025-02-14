@@ -10,12 +10,9 @@ COPY . .
 
 RUN npm run build --prod
 
-FROM nginx:alpine
+FROM alpine:latest
 
-RUN apk add --no-cache nginx
+WORKDIR /frontend
 
-COPY --from=build /app/dist/fenrin_frontend/ /usr/share/nginx/html
+COPY --from=build /app/dist/fenrin_frontend/ /frontend
 
-EXPOSE 80
-
-CMD ["nginx", "-g", "daemon off;"]
