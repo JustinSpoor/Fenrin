@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class JwtService {
 
-    @Value("${API_SECRET_KEY}")
+    @Value("${SECRET_KEY}")
     private String SECRET;
 
     private static final long TOKEN_VALIDITY_TIME = TimeUnit.MINUTES.toMillis(60);
