@@ -60,4 +60,8 @@ jobs:
           ssh -i key.pem -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "cd /home/fenrin/fenrin-app"
           ssh -i key.pem -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "docker compose -f /home/fenrin/fenrin-app/docker-compose.yml down"
           ssh -i key.pem -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "docker compose -f /home/fenrin/fenrin-app/docker-compose.yml up -d"
-          ssh -i key.pem -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "docker cp angular-frontend:/usr/share/nginx/html/ /usr/share/nginx/"
+
+      # copy build files to nginx on vps
+      - name: SSH to VPS and Copy files
+          run: |
+            ssh -i key.pem -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "docker cp angular-frontend:/usr/share/nginx/html/ /usr/share/nginx/"
