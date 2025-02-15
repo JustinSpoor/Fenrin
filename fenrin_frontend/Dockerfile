@@ -20,7 +20,7 @@ WORKDIR /app
 RUN npm install -g http-server
 
 # Copy the built Angular files from the previous step
-COPY --from=build /app/dist/fenrin_frontend/ /usr/share/nginx/html
+COPY --from=build /app/dist/fenrin_frontend /usr/share/nginx/html
 
 # Expose port 80 and serve the frontend
 CMD ["http-server", "/usr/share/nginx/html", "-p", "80"]
