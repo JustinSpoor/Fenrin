@@ -46,13 +46,15 @@ jobs:
           ssh -i key.pem -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "sudo docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}"
           ssh -i key.pem -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "sudo docker image rm -f ${{ secrets.DOCKER_USERNAME}}/angular-frontend:latest || true"
           ssh -i key.pem -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "sudo docker image rm -f ${{ secrets.DOCKER_USERNAME}}/spring-boot-backend:latest || true"
-          ssh -i key.pem -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "sudo docker pull ${{secrets.DOCKER_USERNAME}}/angular-frontend:latest"
-          ssh -i key.pem -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "sudo docker pull ${{secrets.DOCKER_USERNAME}}/spring-boot-backend:latest"
+          ssh -i key.pem -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "sudo docker system prune -af"
           ssh -i key.pem -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "cd /home/fenrin/fenrin-app"
-          ssh -i key.pem -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "docker compose -f /home/fenrin/fenrin-app/docker-compose.yml down"
-          ssh -i key.pem -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "docker compose -f /home/fenrin/fenrin-app/docker-compose.yml up -d --force-recreate"
+          ssh -i key.pem -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "docker compose -f /home/fenrin/fenrin-app/docker-compose.yml down --remove-orphans"
+          ssh -i key.pem -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "docker volume rm fenrin-app_frontend-data || true"
+          ssh -i key.pem -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "docker compose -f /home/fenrin/fenrin-app/docker-compose.yml pull"
+          ssh -i key.pem -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "docker compose -f /home/fenrin/fenrin-app/docker-compose.yml up -d --force-recreate --build"
 
       # copy build files to nginx on vps
       - name: SSH to VPS and Copy files
         run: |
           ssh -i key.pem -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "docker cp angular-frontend:/usr/share/nginx/html/ /usr/share/nginx/"
+          ssh -i key.pem -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "sudo systemctl restart nginx"
