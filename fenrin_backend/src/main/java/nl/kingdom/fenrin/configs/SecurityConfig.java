@@ -37,7 +37,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(registry -> {
 
             //Auth routes
-            registry.requestMatchers("/api/authenticate", "/api/refreshtoken", "/api/register").permitAll();
+            registry.requestMatchers("/api/authenticate", "/api/refreshtoken").permitAll();
+            registry.requestMatchers("/api/register").denyAll();
 
             // Playtime routes
             registry.requestMatchers("/api/playtimelist").hasAnyAuthority(Roles.ROLE_SPELER.toString());
