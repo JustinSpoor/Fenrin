@@ -50,7 +50,17 @@ public class BuildController {
 
                 return ResponseEntity.ok(this.buildService.updateBuild(toBeUpdatedBuild.get()));
             } else {
-                return ResponseEntity.status(409).body("A project with the name " + build.getBuildName() + " already exists.");
+                if (checkIfNameIsAlreadyUsed.get().getId() == toBeUpdatedBuild.get().getId()) {
+                    toBeUpdatedBuild.get().setBuildName(build.getBuildName());
+                    toBeUpdatedBuild.get().setBuilderInCharge(build.getBuilderInCharge());
+                    toBeUpdatedBuild.get().setWarp(build.getWarp());
+                    toBeUpdatedBuild.get().setProgress(build.getProgress());
+                    toBeUpdatedBuild.get().setPriority(build.getPriority());
+
+                    return ResponseEntity.ok(this.buildService.updateBuild(toBeUpdatedBuild.get()));
+                } else {
+                    return ResponseEntity.status(409).body("A project with the name " + build.getBuildName() + " already exists.");
+                }
             }
         } else {
          return ResponseEntity.status(404).body("Could not find build with id " + build.getId());
