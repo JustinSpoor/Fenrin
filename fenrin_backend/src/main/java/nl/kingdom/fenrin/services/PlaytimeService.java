@@ -12,10 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.temporal.WeekFields;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -87,6 +84,10 @@ public class PlaytimeService {
                 .collect(Collectors.toList());
     }
 
+    public Optional<Playtime> getPlaytimeById(UUID id) {
+        return this.playtimeRepository.findById(id);
+    }
+
 
     public Playtime savePlayerPlaytime(PostPlayerPlaytimeDTO playtime, Player player) {
         Playtime newPlaytime = new Playtime();
@@ -99,6 +100,15 @@ public class PlaytimeService {
 
         return this.playtimeRepository.save(newPlaytime);
     }
+
+    public Playtime updatePlaytime(Playtime playtime){
+        return this.playtimeRepository.save(playtime);
+    }
+
+    public void deletePlaytime(Playtime playtime) {
+        this.playtimeRepository.delete(playtime);
+    }
+
 
     public void setDefaultPlaytime(Player player) {
         Playtime defaultPlaytime = new Playtime();

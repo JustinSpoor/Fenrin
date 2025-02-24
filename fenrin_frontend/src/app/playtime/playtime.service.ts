@@ -21,4 +21,13 @@ export class PlaytimeService {
   postPlayerPlaytime(playtime: any) {
     return this.httpService.httpPost('playtime', playtime);
   }
+
+  patchPlayerPlaytime(playtime: any) {
+    return this.httpService.httpPatch(`playtime`, playtime);
+  }
+
+  deletePlayer(id: any) {
+    return this.httpService.httpDelete(`playtime`, id);
+  }
+
 }

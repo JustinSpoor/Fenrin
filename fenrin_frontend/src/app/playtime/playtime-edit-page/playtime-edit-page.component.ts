@@ -3,6 +3,7 @@ import {AuthService} from "../../auth/auth.service";
 import {PlaytimeService} from "../playtime.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ToastService} from "../../shared/toast.service";
+import Swal from "sweetalert2";
 @Component({
   selector: 'app-playtime-edit-page',
   templateUrl: './playtime-edit-page.component.html',
@@ -14,6 +15,7 @@ export class PlaytimeEditPageComponent {
   showNewPlaytimeModal = false;
   form: FormGroup;
   addingPlayer: any | null = null;
+  editingPlaytimeId: any | null = null;
 
   constructor(public authService: AuthService, private playtimeService: PlaytimeService, private formBuilder: FormBuilder, private toasterService: ToastService) {
     this.form = this.formBuilder.group({
@@ -41,6 +43,45 @@ export class PlaytimeEditPageComponent {
   addNewPlaytime(player: any) {
     this.showNewPlaytimeModal = true;
     this.addingPlayer = { ...player}
+  }
+
+  editPlaytime(player: any, playtime: any) {
+    this.showNewPlaytimeModal = true;
+    this.addingPlayer = { ...player };
+
+    this.form.patchValue({
+      year: playtime.year,
+      week: playtime.weekNumber,
+      days: this.formatDays(playtime.timePlayed),
+      hours: this.formatHours(playtime.timePlayed),
+      minutes: playtime.timePlayed % 60,
+      absence: playtime.absent
+    });
+
+    this.editingPlaytimeId = playtime.playtimeId;
+  }
+
+  removePlaytime(playtimeId: any) {
+    Swal.fire({
+      title: 'Weet je het zeker?',
+      text: 'Deze actie is onomkeerbaar',
+      color: 'white',
+      showCancelButton: true,
+      confirmButtonText: 'Verwijderen',
+      cancelButtonText: 'Annuleren'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.playtimeService.deletePlayer(playtimeId).subscribe( {
+          next: () => {
+            this.loadPlaytimes()
+            this.toasterService.showInfo(`Playtime verwijderd!`, 'Verwijderd');
+          },
+          error: () => {
+            this.toasterService.showError('Deze playtime was al verwijderd.', 'Error')
+          }
+        });
+      }
+    });
   }
 
   closeModal() {
@@ -87,24 +128,34 @@ export class PlaytimeEditPageComponent {
   }
 
   onSubmit(playerName: string) {
-    if(this.form.valid) {
+    if (this.form.valid) {
+      let playtimeData = this.formatNewPlaytime();
 
-      let playtime = {
-        name: playerName,
-        playtime: this.formatNewPlaytime()
+      if (this.editingPlaytimeId) {
+        this.playtimeService.patchPlayerPlaytime({id: this.editingPlaytimeId, playtime: playtimeData})
+          .subscribe({
+            next: () => {
+              this.loadPlaytimes();
+              this.closeModal();
+              this.toasterService.showSuccess(`Playtime bijgewerkt voor ${playerName}`, 'Bijgewerkt');
+            },
+            error: () => {
+              this.toasterService.showError(`Fout bij het bijwerken van playtime`, 'Error');
+            }
+          });
+      } else {
+        this.playtimeService.postPlayerPlaytime({ name: playerName, playtime: playtimeData })
+          .subscribe({
+            next: () => {
+              this.loadPlaytimes();
+              this.closeModal();
+              this.toasterService.showSuccess(`Playtime toegevoegd aan ${playerName}`, 'Toegevoegd');
+            },
+            error: () => {
+              this.toasterService.showError(`Er bestaat geen speler met de naam ${playerName}`, 'Error');
+            }
+          });
       }
-
-      this.playtimeService.postPlayerPlaytime(playtime)
-        .subscribe({
-          next: () => {
-            this.loadPlaytimes();
-            this.closeModal();
-            this.toasterService.showSuccess(`Playtime toegevoegd aan ${playtime.name}`, 'Toegevoegd');
-          },
-          error: () => {
-            this.toasterService.showError(`Er bestaat geen speler met de naam ${playtime.name}`, 'Error')
-          }
-        })
     }
   }
 }

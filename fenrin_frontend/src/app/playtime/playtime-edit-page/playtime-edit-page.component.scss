@@ -94,6 +94,28 @@ table, th, td {
   cursor: pointer;
 }
 
+.buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.btn {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-danger {
+  background-color: var(--fenrin-red-color);
+  color: var(--fenrin-blue-color);
+}
+
+.btn-edit {
+  background-color: #ffa500;
+  color: var(--fenrin-blue-color);
+}
+
 .addButton {
   background-color: var(--fenrin-red-color);
   color: var(--fenrin-blue-color);

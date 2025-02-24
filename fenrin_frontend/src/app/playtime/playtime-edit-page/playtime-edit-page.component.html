@@ -23,7 +23,8 @@
           <th>Uren</th>
           <th>minuten</th>
           <th>Wekelijkse uren</th>
-          <th>afgemeld</th>
+          <th>Afgemeld</th>
+          <th>Beheer</th>
         </tr>
         </thead>
         <tbody>
@@ -36,6 +37,12 @@
           <td>{{ i > 0 ? ((player.playtimes[i].timePlayed - player.playtimes[i - 1].timePlayed) / 60).toFixed(2) : 0 }} </td>
           <td *ngIf="playtime.absent">Ja</td>
           <td *ngIf="!playtime.absent">nee</td>
+          <td>
+            <div class="buttons">
+              <button (click)="editPlaytime(player, playtime)" class="btn btn-edit">Bewerken</button>
+              <button (click)="removePlaytime(playtime.playtimeId)" class="btn btn-danger">Verwijderen</button>
+            </div>
+          </td>
         </tr>
         </tbody>
       </table>
@@ -95,6 +102,10 @@
         <button class="form-button" type="submit" [disabled]="form.invalid">Opslaan</button>
       </form>
     </app-modal>
+
+
+
+
   </div>
 </div>
 
