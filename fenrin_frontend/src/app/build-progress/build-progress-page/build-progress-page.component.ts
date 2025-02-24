@@ -110,8 +110,8 @@ export class BuildProgressPageComponent {
       text: 'Deze actie is onomkeerbaar',
       color: 'white',
       showCancelButton: true,
-      confirmButtonText: 'Delete',
-      cancelButtonText: 'Cancel'
+      confirmButtonText: 'Verwijderen',
+      cancelButtonText: 'Annuleren'
     }).then((result) => {
       if(result.isConfirmed) {
         this.buildService.deleteBuild(id).subscribe({

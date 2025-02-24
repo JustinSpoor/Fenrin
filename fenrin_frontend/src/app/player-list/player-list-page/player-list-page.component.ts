@@ -76,8 +76,8 @@ export class PlayerListPageComponent {
       text: 'Deze actie is onomkeerbaar',
       color: 'white',
       showCancelButton: true,
-      confirmButtonText: 'Delete',
-      cancelButtonText: 'Cancel'
+      confirmButtonText: 'Verwijderen',
+      cancelButtonText: 'Annuleren'
     }).then((result) => {
       if (result.isConfirmed) {
         this.playerService.deletePlayer(playerId).subscribe( {
