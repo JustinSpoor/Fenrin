@@ -3,6 +3,7 @@ import {BuildProgressService} from "../build-progress.service";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../../auth/auth.service";
 import {ToastService} from "../../shared/toast.service";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-build-progress-page',
@@ -104,15 +105,26 @@ export class BuildProgressPageComponent {
   }
 
   removeBuild(id: any) {
-    this.buildService.deleteBuild(id).subscribe({
-      next: () => {
-        this.loadBuilds();
-        this.toasterService.showInfo('Bouw project verwijderd.', 'Verwijderd')
-      },
-      error: () => {
-        this.toasterService.showError('Dit bouw project was al verwijderd.', 'Error')
+    Swal.fire({
+      title: 'Weet je het zeker?',
+      text: 'Deze actie is onomkeerbaar',
+      color: 'white',
+      showCancelButton: true,
+      confirmButtonText: 'Delete',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if(result.isConfirmed) {
+        this.buildService.deleteBuild(id).subscribe({
+          next: () => {
+            this.loadBuilds();
+            this.toasterService.showInfo('Bouw project verwijderd.', 'Verwijderd')
+          },
+          error: () => {
+            this.toasterService.showError('Dit bouw project was al verwijderd.', 'Error')
+          }
+        });
       }
-    })
+    });
   }
 
   addBuild() {

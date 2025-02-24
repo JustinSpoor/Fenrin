@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {FormControl} from "@angular/forms";
 import {PlayerListService} from "../player-list.service";
 import {ToastService} from "../../shared/toast.service";
+import Swal  from 'sweetalert2';
 
 @Component({
   selector: 'app-player-list-page',
@@ -70,16 +71,26 @@ export class PlayerListPageComponent {
   }
 
   removePlayer(playerId: any) {
-    this.playerService.deletePlayer(playerId).subscribe( {
-      next: () => {
-        this.loadPlayers()
-        this.toasterService.showInfo(`Speler verwijderd!`, 'Verwijderd');
-      },
-      error: () => {
-        this.toasterService.showError('De speler met deze naam was al verwijderd.', 'Error')
+    Swal.fire({
+      title: 'Weet je het zeker?',
+      text: 'Deze actie is onomkeerbaar',
+      color: 'white',
+      showCancelButton: true,
+      confirmButtonText: 'Delete',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.playerService.deletePlayer(playerId).subscribe( {
+          next: () => {
+            this.loadPlayers()
+            this.toasterService.showInfo(`Speler verwijderd!`, 'Verwijderd');
+          },
+          error: () => {
+            this.toasterService.showError('De speler met deze naam was al verwijderd.', 'Error')
+          }
+        });
       }
     });
-
   }
 
   updatePlayer() {

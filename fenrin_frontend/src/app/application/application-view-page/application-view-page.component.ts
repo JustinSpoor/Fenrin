@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {FormControl} from "@angular/forms";
 import {ApplicationService} from "../application.service";
 import {ToastService} from "../../shared/toast.service";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-application-view-page',
@@ -50,14 +51,25 @@ export class ApplicationViewPageComponent {
   }
 
   removeApplication(applicationId: any) {
-    this.applicationService.deleteApplication(applicationId).subscribe({
-      next: () => {
-        this.loadApplications();
-        this.toasterService.showInfo('Sollicitatie verwijderd', 'Verwijderd')
-      },
-      error: () => {
-        this.toasterService.showError('Deze sollicitatie was al verwijderd.', 'Error')
+    Swal.fire({
+      title: 'Weet je het zeker?',
+      text: 'Deze actie is onomkeerbaar',
+      color: 'white',
+      showCancelButton: true,
+      confirmButtonText: 'Delete',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.applicationService.deleteApplication(applicationId).subscribe({
+          next: () => {
+            this.loadApplications();
+            this.toasterService.showInfo('Sollicitatie verwijderd', 'Verwijderd')
+          },
+          error: () => {
+            this.toasterService.showError('Deze sollicitatie was al verwijderd.', 'Error')
+          }
+        });
       }
-    })
+    });
   }
 }
