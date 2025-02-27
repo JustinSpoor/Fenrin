@@ -60,6 +60,6 @@ jobs:
       # copy build files to nginx on vps
       - name: SSH to VPS and Copy files
         run: |
-          ssh -i key.pem -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "timeout 60s bash -c 'until docker logs angular-frontend 2>&1 | grep -q "Compiled successfully"; do sleep 5; done'"
+          ssh -i key.pem -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "timeout 60s bash -c 'until docker logs angular-frontend 2>&1 | grep -q "Available on"; do sleep 5; done'"
           ssh -i key.pem -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "sudo docker cp angular-frontend:/usr/share/nginx/html/ /usr/share/nginx/"
           ssh -i key.pem -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "sudo systemctl restart nginx"
