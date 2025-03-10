@@ -12,9 +12,9 @@
     <table class="styled-table">
       <thead>
       <tr>
-        <th>Naam</th>
-        <th>Playtime Deze Week</th>
-        <th>Totale Playtime</th>
+        <th (click)="sortTable('name')">Naam <span *ngIf="sortColumn === 'name'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span></th>
+        <th (click)="sortTable('playtimeThisWeek')">Playtime Deze Week <span *ngIf="sortColumn === 'playtimeThisWeek'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span></th>
+        <th (click)="sortTable('totalPlaytime')">Totale Playtime<span *ngIf="sortColumn === 'totalPlaytime'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span></th>
       </tr>
       </thead>
       <tbody>
