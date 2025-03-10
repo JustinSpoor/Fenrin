@@ -13,7 +13,7 @@ export class BuildLeaderGuard implements  CanActivate{
 
   canActivate(): boolean {
     if (!this.authService.hasRoles('ROLE_BOUWLEIDER')) {
-      this.router.navigate(['/login'])
+      this.router.navigate(['/home'])
       this.toasterService.showWarning('Je hebt niet de juiste permissies om naar deze pagina te gaan.', 'Waarschuwing')
       return false;
     }
