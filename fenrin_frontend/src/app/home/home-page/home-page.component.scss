@@ -75,3 +75,9 @@ img {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
+
+@media screen and (max-width: 500px) {
+  .imageContainer {
+    margin-bottom: 3rem;
+  }
+}
