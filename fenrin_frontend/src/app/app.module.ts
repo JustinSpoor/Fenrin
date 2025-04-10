@@ -19,6 +19,7 @@ import {PlayerListModule} from "./player-list/player-list.module";
 import {ApplicationModule} from "./application/application.module";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ToastrModule} from "ngx-toastr";
+import {EventModule} from "./event/event.module";
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import {ToastrModule} from "ngx-toastr";
         HeaderModule,
         HomeModule,
         AboutModule,
+        EventModule,
         PointSystemModule,
         PlaytimeModule,
         BuildProgressModule,

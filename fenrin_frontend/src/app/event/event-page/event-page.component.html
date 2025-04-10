@@ -1,0 +1,18 @@
+<div class="container font-barlow-regular">
+  <div class="grid">
+    <div *ngFor="let row of kothGrid; let rowIndex = index" class="row">
+      <div *ngFor="let cell of row; let colIndex = index" class="cell">
+        <select [(ngModel)]="selectedGroups[rowIndex][colIndex]" [name]="'group_' + rowIndex + '_' + colIndex">
+          <option [ngValue]="null" disabled>Selecteer Kingdom</option>
+          <option *ngFor="let group of groups" [ngValue]="group">{{ group }}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <img src="./assets/images/magnos.png" class="background-image" />
+</div>
+
+<div class="button-container font-barlow-regular">
+  <button class="btn btn-success" (click)="saveGrid()">Save Grid</button>
+  <button class="btn btn-edit" (click)="refreshGrid()">refresh Grid</button>
+</div>

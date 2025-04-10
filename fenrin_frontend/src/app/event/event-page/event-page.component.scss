@@ -1,0 +1,62 @@
+.cell select {
+  padding: 4px;
+  margin: 0.3rem;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  position: relative;
+}
+
+.grid {
+  position: absolute;
+  z-index: 10;
+  display: grid;
+  grid-template-rows: repeat(4, 1fr);
+  gap: 5.5rem;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  gap: 10px;
+}
+
+.background-image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 80vw;
+  max-height: 80vh;
+}
+
+.button-container {
+  position: relative;
+  z-index: 20;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  bottom: 10rem;
+}
+
+.btn {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-edit {
+  background-color: #ffa500;
+  color: var(--fenrin-blue-color);
+}
+
+.btn-success {
+  background-color: #4caf50;
+  color: var(--fenrin-blue-color);
+}

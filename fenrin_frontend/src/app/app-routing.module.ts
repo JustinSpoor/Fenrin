@@ -9,6 +9,7 @@ import {buildProgressRoutes} from "./build-progress/build-progress-routing.modul
 import {loginRoutes} from "./login/login-routing.module";
 import {playerListRoutes} from "./player-list/player-list-routing.module";
 import {applicationRoutes} from "./application/application-routing.module";
+import {eventRoutes} from "./event/event-routing.module";
 
 
 const routes: Routes = [
@@ -27,6 +28,7 @@ const routes: Routes = [
       ...buildProgressRoutes,
       ...playerListRoutes,
       ...applicationRoutes,
+      ...eventRoutes,
       ...loginRoutes,
       {
         path: '**',

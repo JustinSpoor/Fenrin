@@ -58,6 +58,9 @@ public class SecurityConfig {
             registry.requestMatchers("/api/application").permitAll();
             registry.requestMatchers("/api/application/*").hasAnyAuthority(Roles.ROLE_LEAD.toString());
 
+            // Event routes
+            registry.requestMatchers("/api/event").hasAnyAuthority(Roles.ROLE_SPELER.toString());
+
 
                     try {
                         registry.anyRequest().authenticated().and().cors();
