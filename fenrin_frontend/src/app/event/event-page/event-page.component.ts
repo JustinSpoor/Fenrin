@@ -22,7 +22,7 @@ export class EventPageComponent {
   constructor(private eventService: EventService, private toasterService: ToastService) {}
 
   ngOnInit() {
-    // this.loadGrid();
+    this.loadGrid();
   }
 
   loadGrid() {
