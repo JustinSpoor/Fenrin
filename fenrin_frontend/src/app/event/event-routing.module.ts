@@ -6,11 +6,11 @@ import {EventPageComponent} from "./event-page/event-page.component";
 
 
 export const eventRoutes: Routes = [
-  {
-    path: 'event',
-    component: EventPageComponent,
-    canActivate: [AuthGuard, PlayerGuard],
-  },
+  // {
+  //   path: 'event',
+  //   component: EventPageComponent,
+  //   canActivate: [AuthGuard, PlayerGuard],
+  // },
 
 ]
 
