@@ -11,15 +11,16 @@ import java.util.UUID;
 public interface PlaytimeRepository extends JpaRepository<Playtime, UUID> {
 
     @Query(value = """
-        SELECT pt 
-        FROM Playtime pt 
-        JOIN pt.player p 
-        WHERE (pt.year > :startYear 
-               OR (pt.year = :startYear AND pt.weekNumber >= :startWeek))
-          AND (pt.year < :currentYear 
-               OR (pt.year = :currentYear AND pt.weekNumber <= :currentWeek))
-        ORDER BY p.name, pt.year DESC, pt.weekNumber DESC
-    """)
+    SELECT pt 
+    FROM Playtime pt 
+    JOIN pt.player p 
+    WHERE p.rank <> 'non-actief'
+      AND (pt.year > :startYear 
+           OR (pt.year = :startYear AND pt.weekNumber >= :startWeek))
+      AND (pt.year < :currentYear 
+           OR (pt.year = :currentYear AND pt.weekNumber <= :currentWeek))
+    ORDER BY p.name, pt.year DESC, pt.weekNumber DESC
+""")
     List<Playtime> findPlaytimesForLastFiveWeeksDESC(
             @Param("startYear") int startYear,
             @Param("startWeek") int startWeek,
@@ -28,15 +29,16 @@ public interface PlaytimeRepository extends JpaRepository<Playtime, UUID> {
     );
 
     @Query(value = """
-        SELECT pt 
-        FROM Playtime pt 
-        JOIN pt.player p 
-        WHERE (pt.year > :startYear 
-               OR (pt.year = :startYear AND pt.weekNumber >= :startWeek))
-          AND (pt.year < :currentYear 
-               OR (pt.year = :currentYear AND pt.weekNumber <= :currentWeek))
-        ORDER BY p.name, pt.year ASC, pt.weekNumber ASC
-    """)
+    SELECT pt 
+    FROM Playtime pt 
+    JOIN pt.player p 
+    WHERE p.rank <> 'non-actief'
+      AND (pt.year > :startYear 
+           OR (pt.year = :startYear AND pt.weekNumber >= :startWeek))
+      AND (pt.year < :currentYear 
+           OR (pt.year = :currentYear AND pt.weekNumber <= :currentWeek))
+    ORDER BY p.name, pt.year ASC, pt.weekNumber ASC
+""")
     List<Playtime> findPlaytimesForLastFiveWeeksASC(
             @Param("startYear") int startYear,
             @Param("startWeek") int startWeek,
